@@ -2,6 +2,7 @@ const contactLinks = [
   { label: "Handshake", mark: "H", href: "https://utsa.joinhandshake.com/profiles/57978752" },
   { label: "X", mark: "𝕏", href: "https://x.com/2xwllll" },
   { label: "LinkedIn", mark: "in", href: "https://www.linkedin.com/in/william-olson-a6a69232b/" },
+  { label: "GitHub", mark: "GH", href: "https://github.com/2xwlll" },
   { label: "Email", mark: "@", href: "mailto:william.olson@my.utsa.edu" },
 ];
 
