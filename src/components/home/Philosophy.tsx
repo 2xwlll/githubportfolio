@@ -1,19 +1,27 @@
+import Link from "next/link";
+
 export default function Philosophy() {
   const pillars = [
     {
-      title: "💪 Body",
+      title: "Body",
       subtitle: "Discipline through movement",
-      text: "Physical training teaches consistency, resilience, and deliberate practice. Sprinting reminds me that meaningful progress comes from patient repetition, intelligent recovery, and continuous refinement rather than shortcuts.",
+      text: "Physical training keeps me consistent, resilient, and ready for difficult work.",
+      link: "Athletics",
+      href: "/athletics",
     },
     {
-      title: "🧠 Mind",
+      title: "Mind",
       subtitle: "Curiosity through science",
-      text: "Astrophysics, mathematics, and artificial intelligence are how I explore the universe. I enjoy asking difficult questions, building computational tools, and applying critical thinking to uncover patterns hidden within complex data.",
+      text: "Science, mathematics, and AI give me a way to explore hard questions with curiosity.",
+      link: "Hobbies",
+      href: "/hobbies",
     },
     {
-      title: "❤️ Character",
+      title: "Character",
       subtitle: "Stability through perspective",
-      text: "Scientific discovery is rarely straightforward. I strive to approach challenges with humility, emotional stability, integrity, and perseverance, believing that good character is just as important as technical ability.",
+      text: "Integrity, humility, and perseverance shape how I approach setbacks and collaboration.",
+      link: "Attitude",
+      href: "/attitude",
     },
   ];
 
@@ -33,26 +41,8 @@ export default function Philosophy() {
           Three Pillars
         </h2>
 
-        <p className="mt-6 text-lg leading-8 text-slate-300">
-          I believe meaningful scientific work is built on more than technical
-          ability alone. My approach to research—and life—is grounded in three
-          complementary disciplines that continually strengthen one another.
-        </p>
-
-        <p className="mt-5 leading-8 text-slate-400">
-          A healthy <span className="font-semibold text-white">body</span>
-          provides the energy and resilience to perform at a high level. A
-          disciplined <span className="font-semibold text-white">mind</span>
-          develops the curiosity and critical thinking needed for discovery.
-          Strong <span className="font-semibold text-white">character</span>
-          provides the emotional stability and integrity to navigate setbacks,
-          collaborate with others, and pursue long-term goals with purpose.
-        </p>
-
-        <p className="mt-5 leading-8 text-slate-400">
-          I don't view these as separate pursuits. Progress in one strengthens
-          the others, creating a more thoughtful scientist, a better teammate,
-          and a more resilient person.
+        <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
+          A strong body, a curious mind, and steady character create the foundation for meaningful work.
         </p>
         </div>
 
@@ -73,6 +63,13 @@ export default function Philosophy() {
             <p className="mt-6 leading-8 text-slate-400">
               {pillar.text}
             </p>
+
+            <Link
+              href={pillar.href}
+              className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-cyan-200 transition hover:gap-3"
+            >
+              Explore {pillar.link} <span aria-hidden="true">→</span>
+            </Link>
           </div>
         ))}
         </div>
