@@ -1,6 +1,25 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+const changingWork = [
+  "identify ionization cones",
+  "search radio observations",
+  "test astronomical assumptions",
+];
 
 export default function Hero() {
+  const [workIndex, setWorkIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(
+      () => setWorkIndex((current) => (current + 1) % changingWork.length),
+      3600,
+    );
+    return () => window.clearInterval(timer);
+  }, []);
+
   return (
     <section id="top" className="relative isolate flex min-h-[780px] items-end overflow-hidden pt-24 sm:min-h-screen">
       <img src="/images/general/hero-bg.jpg" alt="" className="absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-40" />
@@ -9,12 +28,12 @@ export default function Hero() {
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_75%_20%,rgba(34,211,238,.18),transparent_32%),linear-gradient(0deg,#020617_0%,transparent_38%)]" />
       <div className="mx-auto w-full max-w-7xl px-5 pb-20 sm:px-8 sm:pb-28">
         <div className="max-w-3xl">
-          <img src="/images/profile/highres_headshot.jpg" alt="William Eric Olson" className="mb-7 mt-5 h-28 w-28 rounded-[2rem] border-2 border-cyan-100/50 object-cover object-center shadow-2xl shadow-cyan-950/50 sm:h-32 sm:w-32" />
-          <p className="mb-6 flex items-center gap-3 text-xs font-bold uppercase tracking-[.25em] text-cyan-200"><span className="h-px w-10 bg-cyan-300" /> Astrophysics Undergraduate Researcher</p>
-          <h1 className="max-w-2xl text-5xl font-black leading-[.9] tracking-[-.055em] text-white sm:text-7xl lg:text-8xl">William<br /><span className="text-cyan-100">Eric Olson</span></h1>
-          <p className="mt-8 max-w-2xl text-xl font-light leading-8 text-cyan-100 sm:text-2xl">I train machine-learning models to identify physical structure in astronomical data.</p>
-          <p className="mt-7 max-w-xl text-base leading-7 text-slate-300 sm:text-lg">At UTSA, I research active galactic nuclei and radio technosignatures. My current work asks how physically informed models can make astronomical analysis more consistent, reproducible, and scalable.</p>
-          <div className="mt-10 flex flex-wrap gap-3">
+          <img src="/images/profile/highres_headshot.jpg" alt="William Eric Olson" className="mb-7 mt-5 h-28 w-28 animate-[hero-reveal_700ms_ease-out_both] rounded-[2rem] border-2 border-cyan-100/50 object-cover object-center shadow-2xl shadow-cyan-950/50 sm:h-32 sm:w-32" />
+          <p className="mb-6 flex animate-[hero-reveal_700ms_100ms_ease-out_both] items-center gap-3 text-xs font-bold uppercase tracking-[.25em] text-cyan-200"><span className="h-px w-10 bg-cyan-300" /> Astrophysics Undergraduate Researcher</p>
+          <h1 className="max-w-2xl animate-[hero-reveal_800ms_180ms_ease-out_both] text-5xl font-black leading-[.9] tracking-[-.055em] text-white sm:text-7xl lg:text-8xl">William<br /><span className="text-cyan-100">Eric Olson</span></h1>
+          <p className="mt-8 max-w-2xl animate-[hero-reveal_800ms_260ms_ease-out_both] text-xl font-light leading-9 text-cyan-100 sm:text-2xl">I train machine-learning models to <span key={changingWork[workIndex]} className="changing-words font-semibold text-cyan-300">{changingWork[workIndex]}</span><span className="text-cyan-300">.</span></p>
+          <p className="mt-7 max-w-xl animate-[hero-reveal_800ms_340ms_ease-out_both] text-base leading-7 text-slate-300 sm:text-lg">At UTSA, I research active galactic nuclei and radio technosignatures. My current work asks how physically informed models can make astronomical analysis more consistent, reproducible, and scalable.</p>
+          <div className="mt-10 flex animate-[hero-reveal_800ms_420ms_ease-out_both] flex-wrap gap-3">
             <Link href="/research" className="rounded-full bg-cyan-300 px-6 py-3.5 text-sm font-bold text-slate-950 transition hover:bg-cyan-200">Explore research <span aria-hidden="true">↗</span></Link>
             <Link href="/cv" className="rounded-full border border-white/30 px-6 py-3.5 text-sm font-semibold text-white transition hover:border-cyan-200 hover:bg-white/10">View curriculum vitae</Link>
           </div>
