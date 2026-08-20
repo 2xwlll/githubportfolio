@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "William Eric Olson | Astrophysics & AI Research",
   description:
-    "William Eric Olson is an astrophysics undergraduate researcher exploring artificial intelligence, astronomical instrumentation, JWST science, and radio technosignatures.",
+    "William Eric Olson is a UTSA physics student researching AGN ionization cones, machine-learning methods for astronomical imaging, and radio technosignatures.",
 };
 
 export default function RootLayout({

@@ -47,7 +47,10 @@ export const researchTopics: ResearchTopic[] = [
       "Improve the synthetic physics, especially host-galaxy extinction and line-of-sight projection.",
       "Test how robustly recovered morphology can support large, consistently analyzed AGN samples.",
     ],
-    resources: [{ label: "View research poster", href: "/presentations/20260508_A%20Physically%20Motivated%20Machine%20Learning%20Framework%20for%20Systematic%20Identification%20of%20AGN%20Ionization%20Cones_olsonwilliam_21.pdf", detail: "Methods, validation results, and the NGC 1068 proof of concept · PDF" }],
+    resources: [
+      { label: "View research poster", href: "/presentations/20260508_A%20Physically%20Motivated%20Machine%20Learning%20Framework%20for%20Systematic%20Identification%20of%20AGN%20Ionization%20Cones_olsonwilliam_21.pdf", detail: "Methods, validation results, and the NGC 1068 proof of concept · PDF" },
+      { label: "View the analysis code", href: "https://github.com/2xwlll/IonizationCone-Automation", detail: "Synthetic data, U-Net segmentation, and geometric measurements · GitHub" },
+    ],
   },
   {
     slug: "seti",
@@ -76,6 +79,10 @@ export const researchTopics: ResearchTopic[] = [
       "Document the pipeline from raw input through candidate-ready data products.",
       "Quantify recovery performance using injected or otherwise known signals.",
       "Develop stronger strategies for distinguishing drifting candidates from radio-frequency interference.",
+    ],
+    resources: [
+      { label: "Open the MidRes tutorial", href: "https://github.com/2xwlll/midres-tutorial", detail: "A notebook introduction to the data and workflow · GitHub" },
+      { label: "View the narrowband test", href: "https://github.com/2xwlll/midres_narrow", detail: "Testing a turboSETI workflow on narrowband and MidRes data · GitHub" },
     ],
   },
   {
@@ -106,6 +113,9 @@ export const researchTopics: ResearchTopic[] = [
       "Make uncertainty and failure modes first-class outputs of the analysis.",
       "Compare physically informed training strategies with simpler baselines.",
       "Turn reusable preprocessing, simulation, and evaluation code into documented research tools.",
+    ],
+    resources: [
+      { label: "View the segmentation pipeline", href: "https://github.com/2xwlll/IonizationCone-Automation", detail: "A working example of physically informed machine learning · GitHub" },
     ],
   },
   {

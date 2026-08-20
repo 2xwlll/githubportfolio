@@ -4,24 +4,27 @@ export default function Philosophy() {
   const pillars = [
     {
       title: "Body",
-      subtitle: "Discipline through movement",
-      text: "Physical training keeps me consistent, resilient, and ready for difficult work.",
+      subtitle: "Sprinting and coaching",
+      text: "I analyze each stride, adjust what is inefficient, and repeat. That habit shapes how I train and how I conduct research.",
       link: "Athletics",
       href: "/athletics",
+      image: "/images/athletics/bolt-svgrepo-com.svg",
     },
     {
       title: "Mind",
-      subtitle: "Curiosity through science",
-      text: "Science, mathematics, and AI give me a way to explore hard questions with curiosity.",
+      subtitle: "Questions and experiments",
+      text: "I like learning how a system works, changing one part, and measuring what happens. That applies to astronomy, games, code, and nutrition.",
       link: "Hobbies",
       href: "/hobbies",
+      image: "/images/hobbies/card-game-svgrepo-com.svg",
     },
     {
       title: "Character",
-      subtitle: "Stability through perspective",
-      text: "Integrity, humility, and perseverance shape how I approach setbacks and collaboration.",
+      subtitle: "Work, evidence, and people",
+      text: "I try to state what I know, admit what I do not, and remain useful to the people around me while we find an answer.",
       link: "Attitude",
       href: "/attitude",
+      image: "/images/attitude/attitude-negative-perspective-svgrepo-com.svg",
     },
   ];
 
@@ -38,11 +41,11 @@ export default function Philosophy() {
         </p>
 
         <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-          Three Pillars
+          How I approach my work
         </h2>
 
         <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
-          A strong body, a curious mind, and steady character create the foundation for meaningful work.
+          Research is one part of my life. Sprinting teaches me to improve deliberately, curiosity gives me problems to pursue, and coaching reminds me that knowledge matters more when it can be shared.
         </p>
         </div>
 
@@ -52,9 +55,14 @@ export default function Philosophy() {
             key={pillar.title}
             className="rounded-3xl border border-white/10 bg-slate-900/70 p-8 transition duration-300 hover:-translate-y-1 hover:border-cyan-300"
           >
-            <h3 className="text-2xl font-extrabold tracking-tight text-white">
-              {pillar.title}
-            </h3>
+            <div className="flex items-start justify-between gap-5">
+              <h3 className="text-2xl font-extrabold tracking-tight text-white">
+                {pillar.title}
+              </h3>
+              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-cyan-300/20 bg-cyan-300/10">
+                <img src={pillar.image} alt="" className="h-6 w-6 opacity-85 invert" />
+              </span>
+            </div>
 
             <p className="mt-2 text-cyan-400 font-medium">
               {pillar.subtitle}

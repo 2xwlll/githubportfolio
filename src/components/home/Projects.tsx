@@ -1,7 +1,7 @@
 const projects = [
   {
     title: "Ionization Cone Automation",
-    text: "A Python pipeline for identifying AGN ionization cones—the code behind my physically motivated segmentation research.",
+    text: "The Python pipeline behind my AGN research. It generates training data, segments ionization cones, and measures the recovered geometry.",
     image: "/images/research/ngc1068_prediction.png",
     tag: "Research software",
     language: "Python",
@@ -9,7 +9,7 @@ const projects = [
   },
   {
     title: "SETI MidRes Tutorial",
-    text: "A notebook-based introduction to working with mid-resolution SETI data and turning telescope products into an inspectable workflow.",
+    text: "A notebook tutorial for loading, visualizing, and working through mid-resolution SETI data without hiding the steps inside a black box.",
     image: "/images/research/spliced_blc00010203040506o7o0111213141516o7o021222324252627_guppi_59046_81310_DIAG_VOYAGER-1_0015.rawspec.0002_waterfall.png",
     tag: "Open tutorial",
     language: "Jupyter Notebook",
@@ -17,7 +17,7 @@ const projects = [
   },
   {
     title: "MidRes Narrowband Search",
-    text: "An experimental attempt to reproduce a published turboSETI workflow on narrowband data, then test where that approach breaks on MidRes observations.",
+    text: "I first use turboSETI to reproduce results on narrowband observations, then test whether the same method remains useful on MidRes data.",
     image: "/images/general/research-agentic.jpg",
     tag: "Active experiment",
     language: "Jupyter Notebook",
@@ -34,10 +34,10 @@ export default function Projects() {
           <div className="mb-12 grid gap-8 lg:grid-cols-[1fr_.65fr] lg:items-end">
             <div>
               <p className="mb-4 text-xs font-bold uppercase tracking-[.24em] text-cyan-300">Open work · August 2026</p>
-              <h2 className="max-w-2xl text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Building things for scientific discovery.</h2>
+              <h2 className="max-w-2xl text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Code connected to my research.</h2>
             </div>
             <div>
-              <p className="leading-7 text-slate-300">Right now I am developing reproducible tools for two connected problems: recognizing ionization cones in galaxy images and searching radio observations for narrowband signals.</p>
+              <p className="leading-7 text-slate-300">These repositories show what I am testing now: automatic measurements of ionization cones, a documented route into MidRes data, and an attempt to determine where an established narrowband search method stops working.</p>
               <a href="https://github.com/2xwlll" target="_blank" rel="noreferrer" className="mt-5 inline-flex text-sm font-bold text-cyan-200 transition hover:text-white">Follow the work on GitHub ↗</a>
             </div>
           </div>
@@ -55,11 +55,6 @@ export default function Projects() {
             ))}
           </div>
         </div>
-      </section>
-      <section className="relative py-24 sm:py-32">
-        <img src="/images/general/hubblebroadband.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-20" />
-        <div className="absolute inset-0 bg-slate-950/75" />
-        <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8"><p className="mb-4 text-xs font-bold uppercase tracking-[.24em] text-cyan-300">Perspective</p><blockquote className="text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl">“The universe is full of signals. The real work is learning how to listen.”</blockquote><p className="mt-7 text-sm uppercase tracking-[.22em] text-slate-400">Astrophysics · computation · curiosity</p></div>
       </section>
     </>
   );

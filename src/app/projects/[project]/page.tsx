@@ -1,5 +1,5 @@
-import UnderConstruction from "@/components/UnderConstruction";
+import { redirect } from "next/navigation";
 
 export default function ProjectPage() {
-  return <UnderConstruction />;
+  redirect("/#projects");
 }
