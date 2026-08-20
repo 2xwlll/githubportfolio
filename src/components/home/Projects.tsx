@@ -43,7 +43,7 @@ export default function Projects() {
           </div>
           <div className="grid gap-6 lg:grid-cols-3">
             {projects.map((project, index) => (
-              <a href={project.href} target="_blank" rel="noreferrer" key={project.title} style={{ animationDelay: `${index * 140}ms` }} className="group animate-[fade-up_700ms_ease-out_both] overflow-hidden rounded-2xl border border-white/10 bg-slate-950/65 transition hover:-translate-y-1 hover:border-cyan-300/50">
+              <a href={project.href} target="_blank" rel="noreferrer" key={project.title} style={{ animationDelay: `${index * 140}ms` }} className="motion-card group animate-[fade-up_700ms_ease-out_both] overflow-hidden rounded-2xl border border-white/10 bg-slate-950/65 transition hover:-translate-y-2 hover:border-cyan-300/50">
                 <div className="aspect-[16/10] overflow-hidden"><img src={project.image} alt="" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /></div>
                 <div className="p-7">
                   <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-bold uppercase tracking-[.16em]"><span className="text-cyan-300">{project.tag}</span><span className="text-slate-500">{project.language}</span></div>

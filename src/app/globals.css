@@ -162,10 +162,98 @@
   to { opacity: 1; transform: translateY(0); letter-spacing: inherit; }
 }
 
+@keyframes orbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes icon-float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-0.4rem) rotate(3deg); }
+}
+
+@keyframes tile-breathe {
+  0%, 100% { transform: translateY(0); box-shadow: 0 0 0 rgb(34 211 238 / 0); }
+  50% { transform: translateY(-0.25rem); box-shadow: 0 0.75rem 2rem rgb(34 211 238 / 0.07); }
+}
+
+@keyframes image-drift {
+  0% { transform: scale(1.03) translate3d(-0.5%, 0, 0); }
+  100% { transform: scale(1.09) translate3d(0.5%, -0.5%, 0); }
+}
+
+@keyframes status-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(103 232 249 / 0); }
+  50% { box-shadow: 0 0 0 0.32rem rgb(103 232 249 / 0.09); }
+}
+
 .changing-words {
   display: inline-block;
   animation: changing-words 3.6s ease-in-out both;
 }
+
+.hero-orbit {
+  pointer-events: none;
+  position: absolute;
+  z-index: -5;
+  aspect-ratio: 1;
+  border: 1px solid rgb(103 232 249 / 0.12);
+  border-radius: 9999px;
+  animation: orbit 28s linear infinite;
+}
+
+.hero-orbit span {
+  position: absolute;
+  left: 50%;
+  top: -0.22rem;
+  height: 0.45rem;
+  width: 0.45rem;
+  border-radius: 9999px;
+  background: #67e8f9;
+  box-shadow: 0 0 1rem #22d3ee;
+}
+
+.hero-orbit-one { right: 5%; top: 9%; width: min(42rem, 68vw); }
+.hero-orbit-two { right: 16%; top: 24%; width: min(25rem, 42vw); animation-direction: reverse; animation-duration: 19s; opacity: 0.7; }
+
+.button-sweep {
+  isolation: isolate;
+  overflow: hidden;
+  position: relative;
+}
+
+.button-sweep::after {
+  background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.42), transparent);
+  content: "";
+  inset: 0;
+  position: absolute;
+  transform: translateX(-130%) skewX(-18deg);
+  transition: transform 600ms ease;
+  z-index: -1;
+}
+
+.button-sweep:hover::after { transform: translateX(130%) skewX(-18deg); }
+
+.motion-card {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.motion-card::after {
+  background: radial-gradient(circle at 50% 0%, rgb(103 232 249 / 0.16), transparent 52%);
+  content: "";
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity 450ms ease;
+}
+
+.motion-card:hover::after { opacity: 1; }
+.floating-icon { animation: icon-float 4.2s ease-in-out infinite; }
+.motion-tile { animation: tile-breathe 7s ease-in-out infinite; transition: border-color 300ms ease, transform 300ms ease; }
+.motion-tile:hover { animation-play-state: paused; border-color: rgb(103 232 249 / 0.45); transform: translateY(-0.4rem) rotate(1deg); }
+.research-drift { animation: image-drift 12s ease-in-out infinite alternate; }
+.status-pulse { animation: status-glow 3.4s ease-in-out infinite; }
 
 .tour-focus {
   position: relative;

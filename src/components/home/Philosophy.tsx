@@ -53,13 +53,13 @@ export default function Philosophy() {
         {pillars.map((pillar) => (
           <div
             key={pillar.title}
-            className="rounded-3xl border border-white/10 bg-slate-900/70 p-8 transition duration-300 hover:-translate-y-1 hover:border-cyan-300"
+            className="motion-card rounded-3xl border border-white/10 bg-slate-900/70 p-8 transition duration-300 hover:-translate-y-2 hover:border-cyan-300"
           >
             <div className="flex items-start justify-between gap-5">
               <h3 className="text-2xl font-extrabold tracking-tight text-white">
                 {pillar.title}
               </h3>
-              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-cyan-300/20 bg-cyan-300/10">
+              <span className="floating-icon grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-cyan-300/20 bg-cyan-300/10">
                 <img src={pillar.image} alt="" className="h-6 w-6 opacity-85 invert" />
               </span>
             </div>
