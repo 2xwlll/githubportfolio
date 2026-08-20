@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Contact from "@/components/home/Contact";
 import Navbar from "@/components/Navbar";
 import { getResearchTopic, researchTopics } from "@/lib/research";
+import ResearchFigure from "@/components/ResearchFigure";
 
 type Props = { params: Promise<{ topic: string }> };
 
@@ -24,7 +26,7 @@ export default async function ResearchTopicPage({ params }: Props) {
     <Navbar />
     <article>
       <header className="relative flex min-h-[72vh] items-end overflow-hidden pt-24">
-        <img src={item.image} alt={item.imageAlt} className="absolute inset-0 h-full w-full object-cover" />
+        <Image src={item.image} alt={item.imageAlt} fill priority sizes="100vw" className="absolute inset-0 object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/25" />
         <div className="relative mx-auto w-full max-w-6xl px-5 pb-16 sm:px-8 sm:pb-24">
           <Link href="/research" className="mb-8 inline-block text-sm font-bold text-cyan-200 transition hover:text-white">← All research</Link>
@@ -41,6 +43,8 @@ export default async function ResearchTopicPage({ params }: Props) {
       </section>
 
       <section className="border-y border-white/10 bg-slate-900/70 py-20 sm:py-24"><div className="mx-auto max-w-6xl px-5 sm:px-8"><p className="text-xs font-bold uppercase tracking-[.24em] text-cyan-300">My approach</p><h2 className="mt-4 max-w-3xl text-3xl font-extrabold tracking-tight text-white">What I am doing now</h2><p className="mt-6 max-w-4xl text-lg leading-8 text-slate-300">{item.introduction}</p><div className="mt-10 grid gap-x-10 gap-y-7 sm:grid-cols-2">{item.progress.map((result, index) => <div key={result} className="flex gap-4 border-t border-white/10 pt-5"><span className="text-sm font-black text-cyan-300">{String(index + 1).padStart(2, "0")}</span><p className="leading-7 text-slate-300">{result}</p></div>)}</div>{item.resources && <div className="mt-8 flex flex-wrap gap-4">{item.resources.map((resource) => <a key={resource.href} href={resource.href} target="_blank" rel="noreferrer" className="group rounded-2xl border border-cyan-200/30 bg-cyan-300/10 px-6 py-5 transition hover:bg-cyan-300 hover:text-slate-950"><span className="font-extrabold text-cyan-100 group-hover:text-slate-950">{resource.label} ↗</span><span className="mt-1 block text-sm text-slate-400 group-hover:text-slate-700">{resource.detail}</span></a>)}</div>}</div></section>
+
+      {item.slug === "agn" && <ResearchFigure />}
 
       <section className="border-y border-white/10 bg-slate-900/70 py-20 sm:py-24"><div className="mx-auto max-w-6xl px-5 sm:px-8"><p className="text-xs font-bold uppercase tracking-[.24em] text-cyan-300">What&apos;s next</p><div className="mt-8 grid gap-4 md:grid-cols-3">{item.nextSteps.map((step, index) => <div key={step} className="rounded-2xl border border-white/10 bg-slate-950/65 p-6"><span className="text-sm font-black text-cyan-300">0{index + 1}</span><p className="mt-5 text-lg font-bold leading-7 text-white">{step}</p></div>)}</div></div></section>
 

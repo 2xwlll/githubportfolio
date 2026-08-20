@@ -7,6 +7,7 @@ import Projects from "@/components/home/Projects";
 import CV from "@/components/home/CV";
 import Contact from "@/components/home/Contact";
 import TourGuide from "@/components/TourGuide";
+import ResearchTimeline from "@/components/home/ResearchTimeline";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <About />
+      <ResearchTimeline />
       <Philosophy />
       <ResearchShowcase />
       <Projects />

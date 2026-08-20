@@ -5,6 +5,7 @@ const projects = [
     image: "/images/research/ngc1068_prediction.png",
     tag: "Research software",
     language: "Python",
+    update: "Now: improving transfer from synthetic training data to JWST observations.",
     href: "https://github.com/2xwlll/IonizationCone-Automation",
   },
   {
@@ -13,6 +14,7 @@ const projects = [
     image: "/images/research/spliced_blc00010203040506o7o0111213141516o7o021222324252627_guppi_59046_81310_DIAG_VOYAGER-1_0015.rawspec.0002_waterfall.png",
     tag: "Open tutorial",
     language: "Jupyter Notebook",
+    update: "Now: documenting the route from telescope products to candidate-ready plots.",
     href: "https://github.com/2xwlll/midres-tutorial",
   },
   {
@@ -21,6 +23,7 @@ const projects = [
     image: "/images/general/research-agentic.jpg",
     tag: "Active experiment",
     language: "Jupyter Notebook",
+    update: "Now: comparing recovery behavior across narrowband and MidRes resolutions.",
     href: "https://github.com/2xwlll/midres_narrow",
   },
 ];
@@ -49,6 +52,7 @@ export default function Projects() {
                   <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-bold uppercase tracking-[.16em]"><span className="text-cyan-300">{project.tag}</span><span className="text-slate-500">{project.language}</span></div>
                   <h3 className="mt-3 text-2xl font-extrabold tracking-tight text-white">{project.title}</h3>
                   <p className="mt-4 leading-7 text-slate-400">{project.text}</p>
+                  <p className="mt-5 border-l border-cyan-300/50 pl-4 text-sm leading-6 text-slate-300"><span className="font-bold text-cyan-300">August 2026</span><br />{project.update}</p>
                   <span className="mt-6 inline-block text-sm font-bold text-cyan-200">View repository ↗</span>
                 </div>
               </a>
