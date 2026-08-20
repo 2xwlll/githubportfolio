@@ -167,6 +167,15 @@
   animation: changing-words 3.6s ease-in-out both;
 }
 
+.tour-focus {
+  position: relative;
+  z-index: 30;
+  outline: 2px solid rgb(103 232 249 / 0.72);
+  outline-offset: -2px;
+  box-shadow: 0 0 0 9999px rgb(2 6 23 / 0.48), 0 0 3rem rgb(34 211 238 / 0.16);
+  transition: outline-color 300ms ease, box-shadow 300ms ease;
+}
+
 @supports (animation-timeline: view()) {
   main section h2,
   main article h2 {

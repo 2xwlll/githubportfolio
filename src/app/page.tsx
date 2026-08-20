@@ -6,6 +6,7 @@ import ResearchShowcase from "@/components/home/ResearchShowcase";
 import Projects from "@/components/home/Projects";
 import CV from "@/components/home/CV";
 import Contact from "@/components/home/Contact";
+import TourGuide from "@/components/TourGuide";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Projects />
       <CV />
       <Contact />
+      <TourGuide />
     </main>
   );
 }
