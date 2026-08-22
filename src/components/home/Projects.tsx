@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const projects = [
   {
     title: "Ionization Cone Automation",
@@ -32,7 +34,7 @@ export default function Projects() {
   return (
     <>
       <section id="projects" className="relative border-y border-white/10 bg-slate-900 py-24 sm:py-32">
-        <img src="/images/general/background_blackhole_jet.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-15" />
+        <Image src="/images/general/background_blackhole_jet.jpg" alt="" fill sizes="100vw" className="object-cover opacity-15" />
         <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
           <div className="mb-12 grid gap-8 lg:grid-cols-[1fr_.65fr] lg:items-end">
             <div>
@@ -47,7 +49,7 @@ export default function Projects() {
           <div className="grid gap-6 lg:grid-cols-3">
             {projects.map((project, index) => (
               <a href={project.href} target="_blank" rel="noreferrer" key={project.title} style={{ animationDelay: `${index * 140}ms` }} className="motion-card group animate-[fade-up_700ms_ease-out_both] overflow-hidden rounded-2xl border border-white/10 bg-slate-950/65 transition hover:-translate-y-2 hover:border-cyan-300/50">
-                <div className="aspect-[16/10] overflow-hidden"><img src={project.image} alt="" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /></div>
+                <div className="relative aspect-[16/10] overflow-hidden"><Image src={project.image} alt="" fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover transition duration-700 group-hover:scale-105" /></div>
                 <div className="p-7">
                   <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-bold uppercase tracking-[.16em]"><span className="text-cyan-300">{project.tag}</span><span className="text-slate-500">{project.language}</span></div>
                   <h3 className="mt-3 text-2xl font-extrabold tracking-tight text-white">{project.title}</h3>

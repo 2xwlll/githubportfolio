@@ -134,6 +134,10 @@
 
   ::selection { background: #67e8f9; color: #020617; }
   a { -webkit-tap-highlight-color: transparent; }
+  :where(a, button, input, textarea, select):focus-visible {
+    outline: 3px solid #67e8f9;
+    outline-offset: 3px;
+  }
 }
 
 @keyframes fade-up {

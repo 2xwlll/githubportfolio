@@ -8,7 +8,7 @@ const links = [
   ["Philosophy", "/#philosophy", "philosophy"],
   ["Research", "/#research", "research"],
   ["Projects", "/#projects", "projects"],
-  ["Outputs", "/publications", "outputs"],
+  ["Research outputs", "/publications", "outputs"],
   ["CV", "/#cv", "cv"],
   ["Contact", "/#contact", "contact"],
 ] as const;
@@ -33,8 +33,6 @@ export default function Navbar() {
       activeRef.current = nextSection;
       setActiveSection(nextSection);
 
-      const nextUrl = nextSection ? `/#${nextSection}` : "/";
-      window.history.replaceState(null, "", nextUrl);
     };
 
     updateActiveSection();
@@ -45,6 +43,15 @@ export default function Navbar() {
       window.removeEventListener("resize", updateActiveSection);
     };
   }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [open]);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
