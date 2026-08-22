@@ -156,9 +156,9 @@
 }
 
 @keyframes changing-words {
-  0% { opacity: 0; transform: translateY(0.45em); filter: blur(3px); }
-  18%, 82% { opacity: 1; transform: translateY(0); filter: blur(0); }
-  100% { opacity: 0; transform: translateY(-0.3em); filter: blur(2px); }
+  0% { opacity: 0; transform: translateY(0.65em) scale(0.985); filter: blur(7px); }
+  16%, 80% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  100% { opacity: 0; transform: translateY(-0.45em) scale(0.99); filter: blur(5px); }
 }
 
 @keyframes copy-reveal {
@@ -190,9 +190,13 @@
   50% { box-shadow: 0 0 0 0.32rem rgb(103 232 249 / 0.09); }
 }
 
-.changing-words {
-  display: inline-block;
+.identity-line {
   animation: changing-words 3.6s ease-in-out both;
+}
+
+.identity-line strong {
+  color: #67e8f9;
+  font-weight: 650;
 }
 
 .hero-orbit {
