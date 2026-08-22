@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import FeaturedResearch from "@/components/home/FeaturedResearch";
 import About from "@/components/home/About";
 import Philosophy from "@/components/home/Philosophy";
 import ResearchShowcase from "@/components/home/ResearchShowcase";
@@ -14,7 +13,6 @@ export default function Home() {
       <Navbar />
       <Hero />
       <About />
-      <FeaturedResearch />
       <ResearchShowcase />
       <Projects />
       <Philosophy />

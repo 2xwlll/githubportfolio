@@ -20,13 +20,10 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100">
       <Navbar />
-      <header className="relative overflow-hidden border-b border-white/10 pt-32 sm:pt-40">
-        <Image src="/images/general/japan/japan_headshot.JPG" alt="William Olson in Japan" fill priority sizes="100vw" className="object-cover object-center opacity-30" />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-slate-950/30" />
-        <div className="relative mx-auto max-w-6xl px-5 pb-20 sm:px-8 sm:pb-28">
-          <p className="text-xs font-bold uppercase tracking-[.24em] text-cyan-300">About me</p>
-          <h1 className="mt-5 max-w-4xl text-5xl font-black tracking-[-.045em] text-white sm:text-7xl">Curiosity, translated into work.</h1>
-          <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300">I am William Olson—a physics student, astrophysics researcher, sprinter, and coach learning how to turn difficult questions into systems people can inspect and improve.</p>
+      <header className="border-b border-white/10 pt-28 sm:pt-36">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 pb-16 sm:px-8 sm:pb-24 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
+          <div><p className="text-xs font-bold uppercase tracking-[.24em] text-cyan-300">About me</p><h1 className="mt-5 text-5xl font-black tracking-[-.045em] text-white sm:text-7xl">Curiosity, translated into work.</h1><p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300">I am William Olson—a physics student, astrophysics researcher, sprinter, and coach learning how to turn difficult questions into systems people can inspect and improve.</p></div>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10"><Image src="/images/general/japan/japan_headshot.JPG" alt="William Olson at Kinkaku-ji in Kyoto" fill priority sizes="(min-width: 1024px) 55vw, 100vw" className="object-cover" /></div>
         </div>
       </header>
       <section className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">

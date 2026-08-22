@@ -37,7 +37,8 @@ export default function Projects() {
         <Image src="/images/general/background_blackhole_jet.jpg" alt="" fill sizes="100vw" className="object-cover opacity-15" />
         <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
           <div className="mb-12 grid gap-8 lg:grid-cols-[1fr_.65fr] lg:items-end">
-            <div>
+            <div className="relative">
+              <Image src="/images/gifs/Code Coding Sticker by EscuelaDevRock.gif" alt="" width={64} height={64} unoptimized className="mb-5 h-14 w-14 object-contain opacity-80" />
               <p className="mb-4 text-xs font-bold uppercase tracking-[.24em] text-cyan-300">Open work · August 2026</p>
               <h2 className="max-w-2xl text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Code connected to my research.</h2>
             </div>

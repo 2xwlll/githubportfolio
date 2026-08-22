@@ -10,6 +10,7 @@ export type ResearchTopic = {
   image: string;
   imageAlt: string;
   status: string;
+  stats: { value: string; label: string }[];
   questions: string[];
   methods: string[];
   progress: string[];
@@ -30,6 +31,11 @@ export const researchTopics: ResearchTopic[] = [
     image: "/images/research/ngc1068_prediction.png",
     imageAlt: "Model prediction for the active galaxy NGC 1068",
     status: "Active research",
+    stats: [
+      { value: "1,000", label: "synthetic validation images" },
+      { value: "0.647", label: "mean intersection-over-union" },
+      { value: "3.7°", label: "mean position-angle error" },
+    ],
     questions: [
       "How reliably can ionization cones be identified across large, heterogeneous samples?",
       "What can cone geometry reveal about obscuration and the orientation of an AGN?",
@@ -64,6 +70,11 @@ export const researchTopics: ResearchTopic[] = [
     image: "/images/research/spliced_blc00010203040506o7o0111213141516o7o021222324252627_guppi_59046_81310_DIAG_VOYAGER-1_0015.rawspec.0002_waterfall.png",
     imageAlt: "Radio waterfall plot showing a Voyager 1 signal",
     status: "Active research",
+    stats: [
+      { value: "3", label: "data resolutions compared" },
+      { value: "2", label: "search pipelines evaluated" },
+      { value: "Voyager 1", label: "known-signal validation source" },
+    ],
     questions: [
       "How can weak drifting signals be separated from radio-frequency interference?",
       "Which representations preserve the information needed for reliable candidate detection?",
@@ -97,6 +108,11 @@ export const researchTopics: ResearchTopic[] = [
     image: "/images/research/NGC7640_Injection.png",
     imageAlt: "Synthetic structure injected into an astronomical observation of NGC 7640",
     status: "Active research",
+    stats: [
+      { value: "4", label: "core validation methods" },
+      { value: "Pixel-level", label: "segmentation predictions" },
+      { value: "Synthetic → real", label: "transfer being tested" },
+    ],
     questions: [
       "How can physical assumptions be built into training data and model design?",
       "When does a model generalize to real observations rather than memorize simulations?",
@@ -130,6 +146,11 @@ export const researchTopics: ResearchTopic[] = [
     image: "/images/general/research-exoplanet.jpg",
     imageAlt: "Artist's view of a distant planetary system",
     status: "Future direction",
+    stats: [
+      { value: "3", label: "stages: suppress, recover, validate" },
+      { value: "Faint planets", label: "signals to preserve" },
+      { value: "Uncertainty", label: "must remain measurable" },
+    ],
     questions: [
       "How can post-processing suppress residual starlight without erasing a planet signal?",
       "Where can ML complement established high-contrast imaging methods responsibly?",

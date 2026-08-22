@@ -15,7 +15,6 @@ const links = [
 
 const scrollSections = [
   ["about", "about"],
-  ["featured-research", "research"],
   ["research", "research"],
   ["projects", "projects"],
   ["philosophy", "philosophy"],

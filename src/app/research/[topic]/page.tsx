@@ -37,6 +37,10 @@ export default async function ResearchTopicPage({ params }: Props) {
         </div>
       </header>
 
+      <section className="relative z-10 mx-auto -mt-8 grid max-w-6xl gap-3 px-5 sm:grid-cols-3 sm:px-8">
+        {item.stats.map((stat) => <div key={stat.label} className="rounded-2xl border border-cyan-200/20 bg-slate-900/95 p-6 shadow-2xl shadow-black/20 backdrop-blur"><p className="text-3xl font-black text-cyan-200">{stat.value}</p><p className="mt-2 text-sm leading-5 text-slate-400">{stat.label}</p></div>)}
+      </section>
+
       <section className="mx-auto grid max-w-6xl gap-14 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[1.2fr_.8fr]">
         <div><p className="text-xs font-bold uppercase tracking-[.24em] text-cyan-300">Research focus</p><h2 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">The question and why it matters</h2><p className="mt-7 text-lg leading-8 text-slate-300">{item.whyItMatters}</p><p className="mt-5 leading-8 text-slate-400">{item.challenge}</p></div>
         <aside className="rounded-2xl border border-white/10 bg-slate-900 p-7"><p className="text-xs font-bold uppercase tracking-[.2em] text-cyan-300">Methods & tools</p><ul className="mt-5 space-y-3">{item.methods.map((method) => <li key={method} className="flex gap-3 text-slate-300"><span className="text-cyan-300">✦</span>{method}</li>)}</ul></aside>
