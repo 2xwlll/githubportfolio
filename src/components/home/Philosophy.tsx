@@ -5,7 +5,7 @@ export default function Philosophy() {
     {
       title: "Body",
       subtitle: "Sprinting and coaching",
-      text: "I analyze each stride, adjust what is inefficient, and repeat. That habit shapes how I train and how I conduct research.",
+      text: "Analyze, adjust, repeat—the same discipline guides my training and research.",
       link: "Athletics",
       href: "/athletics",
       image: "/images/athletics/bolt-svgrepo-com.svg",
@@ -13,7 +13,7 @@ export default function Philosophy() {
     {
       title: "Mind",
       subtitle: "Questions and experiments",
-      text: "I like learning how a system works, changing one part, and measuring what happens. That applies to astronomy, games, code, and nutrition.",
+      text: "Learn the system, change one variable, and see what happens.",
       link: "Hobbies",
       href: "/hobbies",
       image: "/images/hobbies/card-game-svgrepo-com.svg",
@@ -21,7 +21,7 @@ export default function Philosophy() {
     {
       title: "Character",
       subtitle: "Work, evidence, and people",
-      text: "I try to state what I know, admit what I do not, and remain useful to the people around me while we find an answer.",
+      text: "State what I know, admit what I do not, and stay useful while we find the answer.",
       link: "Attitude",
       href: "/attitude",
       image: "/images/attitude/attitude-negative-perspective-svgrepo-com.svg",
@@ -44,9 +44,7 @@ export default function Philosophy() {
           How I approach my work
         </h2>
 
-        <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
-          Research is one part of my life. Sprinting teaches me to improve deliberately, curiosity gives me problems to pursue, and coaching reminds me that knowledge matters more when it can be shared.
-        </p>
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">Sprinting, curiosity, and coaching shape how I work.</p>
         </div>
 
         <div className="grid gap-8 md:grid-cols-3">

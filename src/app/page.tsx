@@ -13,12 +13,12 @@ export default function Home() {
     <main className="overflow-hidden bg-slate-950 text-slate-100">
       <Navbar />
       <Hero />
+      <About />
       <FeaturedResearch />
       <ResearchShowcase />
-      <About />
       <Projects />
-      <CV />
       <Philosophy />
+      <CV />
       <Contact />
     </main>
   );
