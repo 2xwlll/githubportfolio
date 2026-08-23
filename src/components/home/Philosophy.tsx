@@ -10,7 +10,6 @@ export default function Philosophy() {
       link: "Athletics",
       href: "/athletics",
       image: "/images/athletics/bolt-svgrepo-com.svg",
-      gif: null,
     },
     {
       title: "Mind",
@@ -19,7 +18,6 @@ export default function Philosophy() {
       link: "Hobbies",
       href: "/hobbies",
       image: "/images/hobbies/card-game-svgrepo-com.svg",
-      gif: "/images/gifs/playing-cards-loop.webm",
     },
     {
       title: "Character",
@@ -28,7 +26,6 @@ export default function Philosophy() {
       link: "Attitude",
       href: "/attitude",
       image: "/images/attitude/attitude-negative-perspective-svgrepo-com.svg",
-      gif: null,
     },
   ];
 
@@ -62,7 +59,7 @@ export default function Philosophy() {
                 {pillar.title}
               </h3>
               <span className="floating-icon grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-cyan-300/20 bg-cyan-300/10">
-                {pillar.gif ? <video autoPlay loop muted playsInline aria-hidden="true" className="h-10 w-10 object-contain"><source src={pillar.gif} type="video/webm" /></video> : <Image src={pillar.image} alt="" width={24} height={24} className="h-6 w-6 opacity-85 invert" />}
+                <Image src={pillar.image} alt="" width={24} height={24} className="h-6 w-6 opacity-85 invert" />
               </span>
             </div>
 
