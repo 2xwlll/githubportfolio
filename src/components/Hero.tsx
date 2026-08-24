@@ -42,7 +42,7 @@ export default function Hero() {
           </div>
           <p className="mt-7 max-w-xl animate-[hero-reveal_800ms_340ms_ease-out_both] text-base leading-7 text-slate-300 sm:text-lg">Currently studying AGN ionization cones at UTSA and radio technosignatures with Breakthrough Listen.</p>
           <div className="mt-10 flex animate-[hero-reveal_800ms_420ms_ease-out_both] flex-wrap gap-3">
-            <Link href="/#featured-research" className="button-sweep rounded-full bg-cyan-300 px-6 py-3.5 text-sm font-bold text-slate-950 transition hover:-translate-y-0.5 hover:bg-cyan-200">See my strongest work <span aria-hidden="true">↓</span></Link>
+            <Link href="/#research" className="button-sweep rounded-full bg-cyan-300 px-6 py-3.5 text-sm font-bold text-slate-950 transition hover:-translate-y-0.5 hover:bg-cyan-200">Explore my research <span aria-hidden="true">↓</span></Link>
             <Link href="/cv" className="button-sweep rounded-full border border-white/30 px-6 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:border-cyan-200 hover:bg-white/10">View curriculum vitae</Link>
             <Link href="/publications" className="rounded-full px-4 py-3.5 text-sm font-semibold text-cyan-200 transition hover:text-white">Research outputs <span aria-hidden="true">↗</span></Link>
           </div>
