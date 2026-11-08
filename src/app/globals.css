@@ -150,20 +150,14 @@
   to { transform: scale(1.08) translate3d(1%, 1%, 0); }
 }
 
-@keyframes hero-reveal {
-  from { opacity: 0; transform: translateY(1rem); filter: blur(4px); }
-  to { opacity: 1; transform: translateY(0); filter: blur(0); }
-}
-
 @keyframes changing-words {
-  0% { opacity: 0; transform: translateY(0.65em) scale(0.985); filter: blur(7px); }
-  16%, 80% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-  100% { opacity: 0; transform: translateY(-0.45em) scale(0.99); filter: blur(5px); }
+  from { opacity: 0; transform: translateY(0.2em); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes copy-reveal {
-  from { opacity: 0; transform: translateY(1.25rem); letter-spacing: -0.015em; }
-  to { opacity: 1; transform: translateY(0); letter-spacing: inherit; }
+  from { opacity: 0; transform: translateY(1.25rem); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes orbit {
@@ -191,10 +185,10 @@
 }
 
 .identity-line {
-  animation: changing-words 3.6s ease-in-out both;
+  animation: changing-words 400ms ease-out both;
 }
 
-.identity-line strong {
+#top strong {
   color: #67e8f9;
   font-weight: 650;
 }
