@@ -16,9 +16,9 @@ export default function Home() {
       <About />
       <ResearchShowcase />
       <Projects />
-      <Outreach />
       <Philosophy />
       <CV />
+      <Outreach />
       <Contact />
     </main>
   );

@@ -33,7 +33,7 @@ export default function AboutPage() {
         <div className="mt-12 flex flex-wrap gap-3">
           <Link href="/research" className="rounded-full bg-cyan-300 px-6 py-3.5 text-sm font-bold text-slate-950">Explore my research →</Link>
           <Link href="/cv" className="rounded-full border border-white/20 px-6 py-3.5 text-sm font-bold text-white">View my CV</Link>
-          <Link href="/#outreach" className="rounded-full border border-white/20 px-6 py-3.5 text-sm font-bold text-white">Outreach & mentoring</Link>
+          <Link href="/outreach" className="rounded-full border border-white/20 px-6 py-3.5 text-sm font-bold text-white">Outreach & mentoring</Link>
         </div>
       </section>
       <Contact />

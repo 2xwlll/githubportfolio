@@ -17,9 +17,9 @@ const scrollSections = [
   ["about", "about"],
   ["research", "research"],
   ["projects", "projects"],
-  ["outreach", "about"],
   ["philosophy", "philosophy"],
   ["cv", "cv"],
+  ["outreach", "about"],
   ["contact", "contact"],
 ] as const;
 
@@ -70,7 +70,7 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [open]);
 
-  const navActive = pathname.startsWith("/research") || pathname === "/publications" ? "research" : pathname === "/about" ? "about" : pathname === "/" ? activeSection : null;
+  const navActive = pathname.startsWith("/research") || pathname === "/publications" ? "research" : pathname === "/about" || pathname === "/outreach" ? "about" : pathname === "/" ? activeSection : null;
   const linkClass = (id: string) => `text-sm font-medium transition ${navActive === id ? "text-cyan-200" : "text-slate-300 hover:text-cyan-200"}`;
   const closeMobile = (id: string) => {
     setActiveSection(id);
@@ -90,7 +90,7 @@ export default function Navbar() {
             <Link className={linkClass("about")} href="/#about" aria-current={navActive === "about" ? "location" : undefined} onClick={() => setActiveSection("about")}>About</Link>
             <div className="invisible absolute left-1/2 top-full w-56 -translate-x-1/2 translate-y-2 rounded-2xl border border-white/10 bg-slate-950/95 p-2 opacity-0 shadow-2xl backdrop-blur-xl transition group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
               <Link href="/about" className="block rounded-xl px-4 py-3 text-sm text-slate-200 transition hover:bg-white/10 hover:text-cyan-200"><span className="block font-bold">My background</span><span className="mt-1 block text-xs text-slate-500">Physics, research, and coaching</span></Link>
-              <Link href="/#outreach" className="block rounded-xl px-4 py-3 text-sm text-slate-200 transition hover:bg-white/10 hover:text-cyan-200"><span className="block font-bold">Outreach & mentoring</span><span className="mt-1 block text-xs text-slate-500">Speaking, STEM, and student athletes</span></Link>
+              <Link href="/outreach" className="block rounded-xl px-4 py-3 text-sm text-slate-200 transition hover:bg-white/10 hover:text-cyan-200"><span className="block font-bold">Outreach & mentoring</span><span className="mt-1 block text-xs text-slate-500">Speaking, STEM, and student athletes</span></Link>
             </div>
           </div>
           <div className="group relative py-2">
@@ -112,7 +112,7 @@ export default function Navbar() {
         <div className="mx-auto grid max-w-7xl gap-1">
           <Link href="/#about" onClick={() => closeMobile("about")} aria-current={navActive === "about" ? "location" : undefined} className={`rounded-lg px-3 py-3 text-sm font-medium ${navActive === "about" ? "bg-white/10 text-cyan-200" : "text-slate-200 hover:bg-white/10"}`}>About</Link>
           <div className="mb-2 ml-3 grid border-l border-cyan-300/25 pl-3">
-            <Link href="/#outreach" onClick={() => closeMobile("about")} className="rounded-lg px-3 py-2 text-sm text-slate-400 hover:bg-white/10 hover:text-cyan-200">Outreach & mentoring</Link>
+            <Link href="/outreach" onClick={() => closeMobile("about")} className="rounded-lg px-3 py-2 text-sm text-slate-400 hover:bg-white/10 hover:text-cyan-200">Outreach & mentoring</Link>
           </div>
           <Link href="/#research" onClick={() => closeMobile("research")} aria-current={navActive === "research" ? "location" : undefined} className={`rounded-lg px-3 py-3 text-sm font-bold ${navActive === "research" ? "bg-white/10 text-cyan-200" : "text-slate-200 hover:bg-white/10"}`}>Research</Link>
           <div className="mb-2 ml-3 grid border-l border-cyan-300/25 pl-3">

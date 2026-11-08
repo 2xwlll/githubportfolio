@@ -9,7 +9,7 @@ export default function Outreach() {
           <p className="mb-4 text-xs font-bold uppercase tracking-[.24em] text-cyan-300">Outreach & mentoring</p>
           <h2 id="outreach-title" className="text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl">Sharing what helped me get here.</h2>
           <p className="mt-7 leading-7 text-slate-300">Research grows through people. I speak about the support that helped me enter research, share the college and Ph.D. pathway with high-school students, and volunteer as a track and field coach.</p>
-          <Link href="/#contact" className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-cyan-200 transition hover:gap-3">Get in touch about outreach <span aria-hidden="true">→</span></Link>
+          <Link href="/outreach" className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-cyan-200 transition hover:gap-3">Explore outreach &amp; mentoring <span aria-hidden="true">→</span></Link>
         </div>
         <div className="border-t border-white/10">
           {outreach.map((item) => (
