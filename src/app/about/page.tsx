@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 };
 
 const chapters = [
-  ["Questions first", "I study physics at UTSA because I want to understand how complex systems reveal themselves through limited observations. Astronomy turns that curiosity into concrete questions about galaxies, black holes, signals, and measurement."],
-  ["From images to systems", "My research began with infrared images of active galactic nuclei. Building synthetic observations and segmentation models taught me that useful machine learning must remain connected to the physical assumptions underneath it."],
-  ["A wider signal search", "Breakthrough Listen extended that thinking into radio astronomy: different data products preserve different information, and a credible search depends on understanding exactly what a pipeline changes or discards."],
-  ["Beyond the research", "Sprinting teaches deliberate iteration. Coaching teaches me to communicate what I see. Both make me a more patient researcher and a better collaborator."],
+  ["Questions first", "I study physics at UTSA, with minors in mathematics and astrophysics, a 4.00 GPA, and an expected graduation in May 2028. Through the Honors College, APPEX, and the College of Science Work Study Research Training Program, I am preparing for graduate research."],
+  ["From images to systems", "Since September 2024, I have studied AGN ionization cones and infrared dust structures with the UTSA Mid-Infrared Astrophysics & Exoplanet Science (MAE) Research Group. My work combines U-Net segmentation, synthetic JWST images, and torus and polar-wind modeling. I presented the cone framework at the Kyoto Torus Workshop in May 2026."],
+  ["A wider signal search", "During my June–August 2026 NSF REU with Breakthrough Listen at UC Berkeley, I searched Green Bank Telescope observations and compared turboSETI and BLISS. Voyager signals, ON/OFF comparisons, and synthetic injections helped test signal recovery and candidate validation."],
+  ["Beyond the research", "I give STEM talks at James Madison High School and volunteer as a track and field coach. In September 2026, I was an invited student speaker for UTSA’s College of Sciences Advancement Council, sharing how research programs supported my growth with donors, alumni, and community leaders."],
 ];
 
 export default function AboutPage() {
@@ -33,6 +33,7 @@ export default function AboutPage() {
         <div className="mt-12 flex flex-wrap gap-3">
           <Link href="/research" className="rounded-full bg-cyan-300 px-6 py-3.5 text-sm font-bold text-slate-950">Explore my research →</Link>
           <Link href="/cv" className="rounded-full border border-white/20 px-6 py-3.5 text-sm font-bold text-white">View my CV</Link>
+          <Link href="/#outreach" className="rounded-full border border-white/20 px-6 py-3.5 text-sm font-bold text-white">Outreach & mentoring</Link>
         </div>
       </section>
       <Contact />

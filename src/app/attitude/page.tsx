@@ -13,7 +13,7 @@ export default function AttitudePage() {
           {[
             ["Be honest about the work", "Call an experiment an experiment, document its limits, and avoid polishing away uncertainty."],
             ["Let failure teach", "A pipeline that breaks or a result that does not transfer is information about the next question."],
-            ["Stay useful to others", "Share methods, write tutorials, and make it easier for collaborators to understand and extend the work."],
+            ["Stay useful to others", "Share methods and tutorials, talk with high-school students about college and research, and mentor student athletes through volunteer coaching."],
           ].map(([title, text]) => <div key={title} className="rounded-2xl border border-white/10 bg-white/[.045] p-5"><h2 className="font-bold text-white">{title}</h2><p className="mt-3 text-sm leading-6 text-slate-400">{text}</p></div>)}
         </div>
         <section className="mt-14 border-t border-white/10 pt-9"><h2 className="text-2xl font-extrabold text-white">My usual response is to work through it.</h2><p className="mt-4 leading-8 text-slate-300">When a race, model, or plan falls short, I try to separate the result from my identity. I determine what I can control, make a measurable adjustment, and continue. This does not guarantee that the next attempt will succeed, but it gives the failure a purpose.</p></section>

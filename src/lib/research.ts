@@ -47,10 +47,12 @@ export const researchTopics: ResearchTopic[] = [
       "Validated on 1,000 synthetic inputs, reaching a mean intersection-over-union of 0.647 ± 0.199, a mean position-angle error of 3.7° ± 2.7°, and a mean opening-angle error of 13.1° ± 7.1°.",
       "Demonstrated foundational transfer to HST imaging of NGC 1068; the recovered position angle was within 3.4% of the reference value.",
       "Identified opening-angle recovery as a key limitation: the NGC 1068 result had 57.6% error, exposing sensitivity to brightness structure and simplified synthetic training data.",
+      "Applying trained models to JWST NIRCam and MIRI observations to test generalization from simulated to observational data.",
+      "Modeling AGN torus and polar-wind emission with FortesFit, CAT3D, CAT3D-Wind, and CLUMPY, using forward modeling and image deconvolution to interpret dust geometry.",
     ],
     nextSteps: [
       "Expand testing to the full GATOS sample and other nearby Seyfert galaxies.",
-      "Improve the synthetic physics, especially host-galaxy extinction and line-of-sight projection.",
+      "Improve synthetic-image realism through host-galaxy extinction, line-of-sight projection, and the proposed use of CLOUDY emission models.",
       "Test how robustly recovered morphology can support large, consistently analyzed AGN samples.",
     ],
     resources: [
@@ -66,12 +68,12 @@ export const researchTopics: ResearchTopic[] = [
     summary: "Searching radio observations for narrowband drifting signals that stand out from terrestrial interference and cosmic noise.",
     whyItMatters: "A credible technosignature search asks whether a signal is better explained by technology than by known astrophysical or terrestrial sources. Radio observations give us a powerful way to conduct that search systematically across wide frequency ranges and many targets.",
     challenge: "The data volume is large, candidate signals can be weak, and human technology fills the radio spectrum with interference. Real signals can also drift in frequency with time, so a useful pipeline must preserve that behavior while reducing raw telescope recordings into products that can be inspected and searched.",
-    introduction: "As an NSF REU researcher with the Breakthrough Listen Initiative, I use Green Bank Telescope observations to compare technosignature-search methods across narrowband, mid-resolution, and rawspec data products. I evaluate turboSETI and BLISS with known spacecraft transmissions, including Voyager 1, before interpreting unknown candidates.",
+    introduction: "During my June–August 2026 NSF REU with the Breakthrough Listen Initiative at UC Berkeley, I conducted radio technosignature searches using Green Bank Telescope observations. I compared turboSETI and BLISS across high- and mid-frequency-resolution products, using Voyager observations, ON/OFF comparisons, and synthetic signal injections to test signal recovery and candidate validation.",
     image: "/images/research/spliced_blc00010203040506o7o0111213141516o7o021222324252627_guppi_59046_81310_DIAG_VOYAGER-1_0015.rawspec.0002_waterfall.png",
     imageAlt: "Radio waterfall plot showing a Voyager 1 signal",
-    status: "Active research",
+    status: "Summer 2026 REU",
     stats: [
-      { value: "3", label: "data resolutions compared" },
+      { value: "2", label: "frequency resolutions compared" },
       { value: "2", label: "search pipelines evaluated" },
       { value: "Voyager 1", label: "known-signal validation source" },
     ],
@@ -82,9 +84,10 @@ export const researchTopics: ResearchTopic[] = [
     ],
     methods: ["Radio waterfall analysis", "Narrowband signal searches", "Data-pipeline development", "Candidate validation"],
     progress: [
-      "Conducting radio technosignature searches with Green Bank Telescope observations through the Breakthrough Listen REU.",
-      "Comparing turboSETI and BLISS across narrowband, MidRes, and rawspec datasets to test the effect of spectral resolution.",
-      "Using known spacecraft transmissions to evaluate recovery and candidate-validation workflows before interpreting unknown signals.",
+      "Conducted radio technosignature searches with Green Bank Telescope observations through the Breakthrough Listen REU at UC Berkeley.",
+      "Evaluated turboSETI and BLISS across high- and mid-frequency-resolution data products using known spacecraft transmissions.",
+      "Tested signal recovery and candidate validation with Voyager observations, ON/OFF comparisons, and synthetic signal injections.",
+      "Developed a NoiseChisel workflow to convert radio time–frequency data to FITS images and identify candidate signal structures, using robust row-based normalization to reduce instrumental artifacts.",
     ],
     nextSteps: [
       "Quantify how spectral resolution changes detection sensitivity and recovered signal properties.",

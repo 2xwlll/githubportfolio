@@ -3,7 +3,7 @@ const milestones = [
   { date: "2025", title: "Moved from images to models", text: "Started building synthetic observations and a U-Net pipeline to identify ionization cones consistently." },
   { date: "Spring 2026", title: "Tested the framework", text: "Presented the ionization-cone work at UTSA, the UTSA–SwRI Symposium, and the Kyoto Torus Workshop." },
   { date: "Summer 2026", title: "Added radio astronomy", text: "Joined the Breakthrough Listen REU at Berkeley to compare technosignature searches across data resolutions." },
-  { date: "Now", title: "Connecting both directions", text: "Improving transfer to real JWST observations while documenting reproducible MidRes search workflows." },
+  { date: "Now", title: "Research and outreach", text: "Testing transfer to JWST observations and sharing my research path through invited speaking and high-school STEM outreach." },
 ];
 
 export default function ResearchTimeline() {

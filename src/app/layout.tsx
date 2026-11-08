@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://githubportfolio-tan.vercel.app"),
   title: "William Eric Olson | Astrophysics & AI Research",
   description:
-    "William Eric Olson is a UTSA physics student researching AGN ionization cones, machine-learning methods for astronomical imaging, and radio technosignatures.",
+    "William Eric Olson is a UTSA physics student researching AGN ionization cones, machine-learning methods for astronomical imaging, and radio technosignatures. Explore research, software, STEM outreach, and mentoring.",
   openGraph: {
     title: "William Eric Olson | Astrophysics & AI Research",
     description: "AGN ionization cones, astronomical machine learning, and radio technosignature research at UTSA and Breakthrough Listen.",

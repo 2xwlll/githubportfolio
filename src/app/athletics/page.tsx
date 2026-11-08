@@ -13,7 +13,7 @@ export default function AthleticsPage() {
           {[
             ["Sprint training", "I break down starts, acceleration, upright mechanics, and race execution, then use times and video to judge the result."],
             ["Strength and recovery", "Weight training develops force, while nutrition, sleep, and restraint determine whether that work can continue."],
-            ["Coaching", "I coach with the UTSA Sprint Group and Randolph Roadrunners because useful instruction helped me, and I want to return it."],
+            ["Coaching", "I volunteer as a track and field coach, mentoring student athletes in sprint training, technique development, and athletic preparation."],
           ].map(([title, text]) => <div key={title} className="rounded-2xl border border-white/10 bg-white/[.045] p-5"><h2 className="font-bold text-white">{title}</h2><p className="mt-3 text-sm leading-6 text-slate-400">{text}</p></div>)}
         </div>
         <section className="mt-14 rounded-3xl border border-cyan-300/20 bg-cyan-300/[.06] p-7 sm:p-9"><p className="text-xs font-bold uppercase tracking-[.2em] text-cyan-300">Where athletics meets building</p><h2 className="mt-3 text-2xl font-extrabold text-white">Speed Food</h2><p className="mt-4 leading-7 text-slate-300">I started building a food-tracking and recipe tool specifically for sprinters. It is an early experiment in making the everyday logistics around training easier to manage.</p><a href="https://github.com/2xwlll/Speed_Food_App" target="_blank" rel="noreferrer" className="mt-5 inline-flex text-sm font-bold text-cyan-200">See the work in progress ↗</a></section>

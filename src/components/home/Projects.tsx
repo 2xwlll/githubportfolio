@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const projects = [
   {
@@ -7,26 +8,26 @@ const projects = [
     image: "/images/research/ngc1068_prediction.png",
     tag: "Research software",
     language: "Python",
-    update: "Now: improving transfer from synthetic training data to JWST observations.",
+    update: "Testing JWST NIRCam and MIRI observations; proposed CLOUDY emission modeling to improve synthetic images.",
     href: "https://github.com/2xwlll/IonizationCone-Automation",
   },
   {
-    title: "SETI MidRes Tutorial",
-    text: "A notebook tutorial for loading, visualizing, and working through mid-resolution SETI data without hiding the steps inside a black box.",
+    title: "Radio Signal Detection with NoiseChisel",
+    text: "A workflow that converts radio time–frequency data to FITS images and uses NoiseChisel to identify candidate signal structures.",
     image: "/images/research/spliced_blc00010203040506o7o0111213141516o7o021222324252627_guppi_59046_81310_DIAG_VOYAGER-1_0015.rawspec.0002_waterfall.png",
-    tag: "Open tutorial",
-    language: "Jupyter Notebook",
-    update: "Now: documenting the route from telescope products to candidate-ready plots.",
-    href: "https://github.com/2xwlll/midres-tutorial",
+    tag: "Radio analysis",
+    language: "Python · FITS",
+    update: "Implemented robust row-based normalization and preprocessing to reduce instrumental artifacts.",
+    href: "/research/seti",
   },
   {
-    title: "MidRes Narrowband Search",
-    text: "I first use turboSETI to reproduce results on narrowband observations, then test whether the same method remains useful on MidRes data.",
+    title: "Honors College Event Analyzer",
+    text: "A Python application for analyzing Honors College attendance through event categories, SPICES themes, and keyword relationships.",
     image: "/images/general/research-agentic.jpg",
-    tag: "Active experiment",
-    language: "Jupyter Notebook",
-    update: "Now: comparing recovery behavior across narrowband and MidRes resolutions.",
-    href: "https://github.com/2xwlll/midres_narrow",
+    tag: "Student engagement",
+    language: "Python",
+    update: "Generates statistics and visualizations to support event planning and assessment of student engagement.",
+    href: "https://github.com/2xwlll/SPICESsense",
   },
 ];
 
@@ -39,24 +40,24 @@ export default function Projects() {
           <div className="mb-12 grid gap-8 lg:grid-cols-[1fr_.65fr] lg:items-end">
             <div className="relative">
               <Image src="/images/gifs/git_sticker.gif" alt="" width={64} height={64} unoptimized className="mb-5 h-14 w-14 object-contain opacity-80" />
-              <p className="mb-4 text-xs font-bold uppercase tracking-[.24em] text-cyan-300">Open work · August 2026</p>
-              <h2 className="max-w-2xl text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Code connected to my research.</h2>
+              <p className="mb-4 text-xs font-bold uppercase tracking-[.24em] text-cyan-300">Selected software · November 2026</p>
+              <h2 className="max-w-2xl text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Code connected to real questions.</h2>
             </div>
             <div>
-              <p className="leading-7 text-slate-300">These repositories show what I am testing now: automatic measurements of ionization cones, a documented route into MidRes data, and an attempt to determine where an established narrowband search method stops working.</p>
+              <p className="leading-7 text-slate-300">From AGN morphology to radio signals and student engagement, I build reusable tools for analyzing data. My MidRes tutorial and narrowband-search notebooks are also collected in <Link href="/publications" className="font-bold text-cyan-200 hover:text-white">research outputs</Link>.</p>
               <a href="https://github.com/2xwlll" target="_blank" rel="noreferrer" className="mt-5 inline-flex text-sm font-bold text-cyan-200 transition hover:text-white">Follow the work on GitHub ↗</a>
             </div>
           </div>
           <div className="grid gap-6 lg:grid-cols-3">
             {projects.map((project, index) => (
-              <a href={project.href} target="_blank" rel="noreferrer" key={project.title} style={{ animationDelay: `${index * 140}ms` }} className="motion-card group animate-[fade-up_700ms_ease-out_both] overflow-hidden rounded-2xl border border-white/10 bg-slate-950/65 transition hover:-translate-y-2 hover:border-cyan-300/50">
+              <a href={project.href} target={project.href.startsWith("http") ? "_blank" : undefined} rel={project.href.startsWith("http") ? "noreferrer" : undefined} key={project.title} style={{ animationDelay: `${index * 140}ms` }} className="motion-card group animate-[fade-up_700ms_ease-out_both] overflow-hidden rounded-2xl border border-white/10 bg-slate-950/65 transition hover:-translate-y-2 hover:border-cyan-300/50">
                 <div className="relative aspect-[16/10] overflow-hidden"><Image src={project.image} alt="" fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover transition duration-700 group-hover:scale-105" /></div>
                 <div className="p-7">
                   <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-bold uppercase tracking-[.16em]"><span className="text-cyan-300">{project.tag}</span><span className="text-slate-500">{project.language}</span></div>
                   <h3 className="mt-3 text-2xl font-extrabold tracking-tight text-white">{project.title}</h3>
                   <p className="mt-4 leading-7 text-slate-400">{project.text}</p>
-                  <p className="mt-5 border-l border-cyan-300/50 pl-4 text-sm leading-6 text-slate-300"><span className="font-bold text-cyan-300">August 2026</span><br />{project.update}</p>
-                  <span className="mt-6 inline-block text-sm font-bold text-cyan-200">View repository ↗</span>
+                  <p className="mt-5 border-l border-cyan-300/50 pl-4 text-sm leading-6 text-slate-300"><span className="font-bold text-cyan-300">November 2026</span><br />{project.update}</p>
+                  <span className="mt-6 inline-block text-sm font-bold text-cyan-200">{project.href.startsWith("http") ? "View repository ↗" : "Read about the workflow →"}</span>
                 </div>
               </a>
             ))}

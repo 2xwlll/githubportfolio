@@ -15,7 +15,7 @@ const tours = {
     { target: "about", title: "Research context", text: "I work with the UTSA MAE Research Group and the Breakthrough Listen collaboration." },
     { target: "research", title: "Research areas", text: "Each card explains a scientific problem, methods, quantitative progress, limitations, and next steps." },
     { target: "projects", title: "Reproducible code", text: "These repositories expose the working pipelines, notebooks, and experiments behind the summaries." },
-    { target: "cv", title: "Preparation", text: "Review my research experience and presentations, open the outputs index, or download the August 2026 CV." },
+    { target: "cv", title: "Preparation", text: "Review my research experience, outreach, and presentations, or download the November 2026 CV." },
     { target: "contact", title: "Questions and collaboration", text: "I welcome technical questions about the methods and conversations about research opportunities." },
   ],
 } satisfies Record<TourMode, { target: string; title: string; text: string }[]>;
