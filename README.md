@@ -41,3 +41,7 @@ npm run dev
 ## Updating track and field marks
 
 Edit [public/data/track-results.json](public/data/track-results.json) to update the interactive track on `/athletics`. See [the results guide](docs/track-results.md) for units, optional meet details, and adding results over time.
+
+## After-hours observatory
+
+The frog-guided mini-labs are available at `/observatory`. See [the observatory guide](docs/observatory.md) for data provenance, local exports, scientific interpretation, and updating the examples.

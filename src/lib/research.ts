@@ -16,11 +16,18 @@ export type ResearchTopic = {
   progress: string[];
   nextSteps: string[];
   resources?: { label: string; href: string; detail: string }[];
+  contribution?: { role: string; work: string[]; evidence: string; scope: string };
 };
 
 export const researchTopics: ResearchTopic[] = [
   {
     slug: "agn",
+    contribution: {
+      role: "Image simulation and segmentation pipeline development",
+      work: ["Developed a modular Python framework for synthetic images, augmentation, U-Net training, inference, and evaluation.", "Applied image-processing and geometry measurements to connect segmentation outputs with AGN morphology.", "Presented this work at the Kyoto Torus Workshop and UTSA research symposia."],
+      evidence: "The poster reports the synthetic validation and NGC 1068 proof of concept. The linked repository exposes the analysis code.",
+      scope: "Synthetic validation and an observational proof of concept; transfer to larger observational samples remains a research question. My contributions sit within the collaborative UTSA MAE research effort.",
+    },
     shortTitle: "AGN",
     title: "Active Galactic Nuclei",
     eyebrow: "Galaxies · black holes · feedback",
@@ -56,12 +63,19 @@ export const researchTopics: ResearchTopic[] = [
       "Test how robustly recovered morphology can support large, consistently analyzed AGN samples.",
     ],
     resources: [
+      { label: "Try the cone mini-lab", href: "/observatory/cones", detail: "Mark a cone, reveal a frozen prediction, and inspect the comparison · Interactive" },
       { label: "View research poster", href: "/presentations/20260508_A%20Physically%20Motivated%20Machine%20Learning%20Framework%20for%20Systematic%20Identification%20of%20AGN%20Ionization%20Cones_olsonwilliam_21.pdf", detail: "Methods, validation results, and the NGC 1068 proof of concept · PDF" },
       { label: "View the analysis code", href: "https://github.com/2xwlll/IonizationCone-Automation", detail: "Synthetic data, U-Net segmentation, and geometric measurements · GitHub" },
     ],
   },
   {
     slug: "seti",
+    contribution: {
+      role: "Search workflow evaluation and candidate validation",
+      work: ["Compared turboSETI and BLISS using high- and mid-frequency-resolution telescope data and known spacecraft transmissions.", "Tested recovery with Voyager observations, ON/OFF comparisons, and synthetic signal injections during my summer 2026 REU.", "Developed analysis tools and a mid-resolution tutorial to make the workflow inspectable and reusable."],
+      evidence: "My Colab tutorial walks through native mid-resolution data, preprocessing, candidate searches, and the ON/OFF observing pattern.",
+      scope: "Known spacecraft signals are validation examples. Recovering one strong signal or injection does not establish survey completeness or a detection of extraterrestrial intelligence.",
+    },
     shortTitle: "SETI",
     title: "Search for Extraterrestrial Intelligence",
     eyebrow: "Radio astronomy · technosignatures · signal processing",
@@ -95,12 +109,20 @@ export const researchTopics: ResearchTopic[] = [
       "Identify where automated searches confuse spacecraft signals, radio-frequency interference, and candidate technosignatures.",
     ],
     resources: [
+      { label: "Open my Voyager Colab tutorial", href: "https://colab.research.google.com/drive/1wOC0SfRIm4v8qT7pGF8FS6o_ko7tY3RO#scrollTo=midres-000", detail: "A guided mid-resolution Voyager analysis with the ON/OFF cadence · Google Colab" },
+      { label: "Try the Voyager mini-lab", href: "/observatory/voyager", detail: "Find the carrier and compare spectral resolution · Interactive" },
       { label: "Open the MidRes tutorial", href: "https://github.com/2xwlll/midres-tutorial", detail: "A notebook introduction to the data and workflow · GitHub" },
       { label: "View the narrowband test", href: "https://github.com/2xwlll/midres_narrow", detail: "Testing a turboSETI workflow on narrowband and MidRes data · GitHub" },
     ],
   },
   {
     slug: "ml",
+    contribution: {
+      role: "Reusable scientific machine-learning workflows",
+      work: ["Built synthetic-data generation and image-segmentation workflows for the AGN project.", "Implemented reusable augmentation, inference, and evaluation steps for reproducible experiments.", "Examined where models trained on simulated images transfer to observations, and where they fail."],
+      evidence: "The ionization-cone repository and poster provide a concrete example of these methods in use.",
+      scope: "This describes methods developed through my AGN work, rather than a separate independently validated astronomy model.",
+    },
     shortTitle: "ML",
     title: "Machine Learning for Astronomy",
     eyebrow: "Scientific ML · computer vision · inference",
