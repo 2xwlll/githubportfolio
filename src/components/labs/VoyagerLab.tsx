@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import FrogGuide from "./FrogGuide";
-import { maximumBinnedWaterfall, voyagerTutorial } from "@/lib/labs";
+import { maximumBinnedWaterfall, voyagerTutorial, waterfallViewport } from "@/lib/labs";
 
 type Waterfall = {
   label: string; width: number; height: number; pixels: number[];
@@ -29,13 +29,13 @@ export default function VoyagerLab() {
   const [mode, setMode] = useState<Mode>("fine");
   const [contrast, setContrast] = useState(1);
   const [choices, setChoices] = useState<Partial<Record<Mode, Choice>>>({});
-  const [fineView, setFineView] = useState<{ start: number; end: number } | null>(null);
+  const [views, setViews] = useState<Record<Mode, { zoom: number; center: number | null }>>({ fine: { zoom: 0, center: null }, mid: { zoom: 0, center: null } });
   const [showHint, setShowHint] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const active = data?.datasets[mode];
   const choice = choices[mode];
-  const start = mode === "fine" ? fineView?.start ?? 0 : 0;
-  const end = mode === "fine" ? fineView?.end ?? active?.width ?? 0 : active?.width ?? 0;
+  const view = views[mode];
+  const { start, end } = active ? waterfallViewport(active.width, view.zoom, view.center ?? (active.width - 1) / 2, mode === "fine" ? 64 : 4) : { start: 0, end: 0 };
 
   useEffect(() => {
     const controller = new AbortController();
@@ -89,6 +89,7 @@ export default function VoyagerLab() {
   const distance = choice ? Math.abs(choice.column - reference) : 0;
   const matched = distance <= (mode === "mid" ? 0 : choice?.binWidth ?? 1);
   const middle = Math.floor((start + end) / 2);
+  const visibleSelection = Math.max(start, Math.min(end - 1, choice?.column ?? middle));
   const selectedFrequency = active.frequencyMHz[choice?.column ?? middle];
   const range = active.frequencyMHz;
   const nativeHz = active.nativeFrequencyResolutionHz;
@@ -97,31 +98,40 @@ export default function VoyagerLab() {
   const setChoice = (column: number, row: number) => setChoices(current => ({ ...current, [mode]: { column, row, revealed: false, binWidth } }));
   const reset = () => {
     setChoices(current => ({ ...current, [mode]: undefined }));
-    if (mode === "fine") { setFineView(null); setShowHint(false); }
+    setViews(current => ({ ...current, [mode]: { zoom: 0, center: null } }));
+    if (mode === "fine") setShowHint(false);
   };
-  const zoom = () => {
-    if (!choice || choice.revealed) return;
-    const width = Math.max(256, Math.min(512, Math.floor((end - start) / 2)));
-    const left = Math.max(0, Math.min(active.width - width, choice.column - Math.floor(width / 2)));
-    setFineView({ start: left, end: left + width });
-    setChoices(current => ({ ...current, fine: undefined }));
+  const zoom = (amount: number) => {
+    setViews(current => ({ ...current, [mode]: { zoom: amount, center: choice?.column ?? (start + end - 1) / 2 } }));
   };
+  const visibleChannels = end - start;
+  const zoomFactor = active.width / visibleChannels;
+  const panMinimum = Math.floor((visibleChannels - 1) / 2);
+  const panMaximum = active.width - visibleChannels + panMinimum;
+  const panCenter = start + panMinimum;
 
   return <div>
     <FrogGuide>{choices.fine?.revealed && choices.mid?.revealed ? "You’ve inspected both views. Same spacecraft, different sampling. The full tutorial takes the next step: checking whether a candidate follows the ON/OFF observing pattern." : choice?.revealed ? mode === "mid" ? "A wide channel can contain the carrier without resolving its detailed drift. A zero-drift search result is not proof that the physical signal has exactly zero drift." : "That narrow trace is the carrier reference. A bright line is a useful beginning; a careful search also needs controls and candidate validation." : "Somewhere in this wider field is a spacecraft calling home. Pick a candidate, then zoom in to inspect its drift. More than one narrow feature may be present. There’s an optional hint if you get stuck; try both resolutions."}</FrogGuide>
     <div className="mt-8 grid items-start gap-8 lg:grid-cols-[1.25fr_.75fr]">
       <div>
         <div className="mb-5 flex flex-wrap gap-3" role="group" aria-label="Spectral resolution">{(["fine", "mid"] as const).map(resolution => <button key={resolution} aria-pressed={mode === resolution} onClick={() => { setMode(resolution); setContrast(1); }} className={`rounded-full border px-5 py-3 text-sm font-bold ${mode === resolution ? "border-cyan-200 bg-cyan-200 text-slate-950" : "border-white/20 text-slate-200"}`}>{resolution === "fine" ? "Fine resolution" : "Mid resolution"}{choices[resolution]?.revealed ? " · explored" : ""}</button>)}</div>
-        {mode === "fine" && <div className="mb-5 rounded-2xl border border-white/10 p-4">
-          <p className="text-sm font-bold text-cyan-100">{end - start === active.width ? "Wide-field search" : "Candidate close-up"}</p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            <button onClick={zoom} disabled={!choice || choice.revealed || end - start <= 256} className="min-h-11 rounded-xl border border-cyan-200/40 px-3 text-sm font-bold text-cyan-100 disabled:opacity-40">Zoom around selection</button>
-            <button onClick={() => { setFineView(null); if (!choice?.revealed) setChoices(current => ({ ...current, fine: undefined })); }} disabled={end - start === active.width} className="min-h-11 rounded-xl border border-white/20 px-3 text-sm text-slate-300 disabled:opacity-40">Show full field</button>
-            {!choice?.revealed && <button onClick={() => setShowHint(!showHint)} className="min-h-11 rounded-xl px-3 text-sm font-bold text-cyan-200">{showHint ? "Hide hint" : "Show a hint"}</button>}
+        <div className="mb-5 rounded-2xl border border-white/10 p-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p className="text-sm font-bold text-cyan-100">{visibleChannels === active.width ? "Wide-field search" : "Candidate close-up"}</p>
+            <button onClick={() => setViews(current => ({ ...current, [mode]: { ...current[mode], zoom: 0 } }))} disabled={visibleChannels === active.width} className="min-h-11 rounded-xl border border-white/20 px-3 text-sm text-slate-300 disabled:opacity-40">Show full field</button>
           </div>
-          {(showHint || choice?.revealed) && <p className="mt-3 text-sm leading-7 text-slate-300">Expected carrier: about {data.expectedCarrierMHz.toFixed(4)} MHz. Check the frequency axis; a bright neighboring line can be a sideband.</p>}
-          <p className="mt-3 text-xs leading-6 text-slate-400">Each display bin shows its brightest native sample ({binWidth} native {binWidth === 1 ? "channel" : "channels"} per bin, up to {(binWidth * nativeHz).toFixed(1)} Hz). Zoom separates the channels; it does not add data.</p>
-        </div>}
+          <label className="mt-3 block text-sm text-slate-200">Frequency zoom: <span className="font-bold tabular-nums text-cyan-100">{zoomFactor.toFixed(1)}×</span>
+            <input type="range" aria-label="Frequency zoom" aria-valuetext={`${zoomFactor.toFixed(1)} times, ${visibleChannels} native channels visible`} min="0" max="100" step="1" value={view.zoom} onChange={event => zoom(Number(event.target.value))} className="mt-3 block w-full accent-cyan-300" />
+          </label>
+          <div className="mt-1 flex justify-between text-xs text-slate-400"><span>Full field</span><span>Close-up</span></div>
+          {visibleChannels < active.width && <label className="mt-4 block text-sm text-slate-300">Frequency position
+            <input type="range" aria-label="Frequency position" aria-valuetext={`${active.frequencyMHz[panCenter].toFixed(6)} MHz at center`} min={panMinimum} max={panMaximum} step="1" value={panCenter} onChange={event => setViews(current => ({ ...current, [mode]: { ...current[mode], center: Number(event.target.value) } }))} className="mt-3 block w-full accent-cyan-300" />
+          </label>}
+          <p className="mt-3 text-sm leading-6 text-slate-400">Pick a feature to zoom around it, or zoom first and use Frequency position to explore.</p>
+          {mode === "fine" && !choice?.revealed && <button onClick={() => setShowHint(!showHint)} className="mt-2 min-h-11 rounded-xl px-3 text-sm font-bold text-cyan-200">{showHint ? "Hide hint" : "Show a hint"}</button>}
+          {mode === "fine" && (showHint || choice?.revealed) && <p className="mt-3 text-sm leading-7 text-slate-300">Expected carrier: about {data.expectedCarrierMHz.toFixed(4)} MHz. Check the frequency axis; a bright neighboring line can be a sideband.</p>}
+          <p className="mt-3 text-xs leading-6 text-slate-400">Each display bin shows its brightest native sample (up to {binWidth} native {binWidth === 1 ? "channel" : "channels"} per bin, {(binWidth * nativeHz).toFixed(1)} Hz). {mode === "mid" ? "Zoom enlarges the coarse channels; it cannot resolve drift inside them." : "Zoom separates the channels; it does not add data."}</p>
+        </div>
         <p className="mb-3 text-sm text-slate-400">Time increases down the image · Frequency increases to the right</p>
         <div className="overflow-hidden rounded-2xl border border-white/15 bg-black"><canvas ref={canvasRef} width={640} height={360} role="img" aria-label={`${active.label} Voyager waterfall. Select a frequency using the slider below, or click a feature in the image.`} className="block aspect-[16/9] w-full cursor-crosshair" onPointerDown={event => {
           if (choice?.revealed) return;
@@ -130,8 +140,8 @@ export default function VoyagerLab() {
         }} /></div>
         <div className="mt-4 space-y-3 lg:hidden">
           {mode === "mid" && <p className="text-sm leading-7 text-cyan-100">Expected carrier: about {data.expectedCarrierMHz.toFixed(4)} MHz. Brighter neighboring stripes can be sidebands.</p>}
-          <label className="block text-sm text-slate-300">Select a frequency channel<input type="range" aria-label="Select a frequency channel" min={start} max={end - 1} step="1" disabled={choice?.revealed} value={choice?.column ?? middle} onChange={e => setChoice(Number(e.target.value), Math.floor(active.height / 2))} className="mt-2 block w-full accent-orange-300" /></label>
-          <div className="grid grid-cols-[auto_1fr_auto] gap-3"><button aria-label="Previous frequency channel" disabled={choice?.revealed} onClick={() => setChoice(Math.max(start, (choice?.column ?? middle) - 1), choice?.row ?? Math.floor(active.height / 2))} className="min-h-11 min-w-11 rounded-xl border border-white/20 px-3 text-lg text-white disabled:opacity-40">−</button>{!choice?.revealed ? <button aria-label="Reveal the carrier" disabled={!choice} onClick={() => setChoices(current => ({ ...current, [mode]: { ...choice!, revealed: true } }))} className="min-h-11 rounded-xl bg-cyan-200 px-3 text-sm font-bold text-slate-950 disabled:opacity-40">Reveal carrier</button> : <button aria-label="Try this view again" onClick={reset} className="min-h-11 rounded-xl border border-cyan-200/40 px-3 text-sm font-bold text-cyan-200">Try again</button>}<button aria-label="Next frequency channel" disabled={choice?.revealed} onClick={() => setChoice(Math.min(end - 1, (choice?.column ?? middle) + 1), choice?.row ?? Math.floor(active.height / 2))} className="min-h-11 min-w-11 rounded-xl border border-white/20 px-3 text-lg text-white disabled:opacity-40">+</button></div>
+          <label className="block text-sm text-slate-300">Select a frequency channel<input type="range" aria-label="Select a frequency channel" min={start} max={end - 1} step="1" disabled={choice?.revealed} value={visibleSelection} onChange={e => setChoice(Number(e.target.value), Math.floor(active.height / 2))} className="mt-2 block w-full accent-orange-300" /></label>
+          <div className="grid grid-cols-[auto_1fr_auto] gap-3"><button aria-label="Previous frequency channel" disabled={choice?.revealed} onClick={() => setChoice(Math.max(start, visibleSelection - 1), choice?.row ?? Math.floor(active.height / 2))} className="min-h-11 min-w-11 rounded-xl border border-white/20 px-3 text-lg text-white disabled:opacity-40">−</button>{!choice?.revealed ? <button aria-label="Reveal the carrier" disabled={!choice} onClick={() => setChoices(current => ({ ...current, [mode]: { ...choice!, revealed: true } }))} className="min-h-11 rounded-xl bg-cyan-200 px-3 text-sm font-bold text-slate-950 disabled:opacity-40">Reveal carrier</button> : <button aria-label="Try this view again" onClick={reset} className="min-h-11 rounded-xl border border-cyan-200/40 px-3 text-sm font-bold text-cyan-200">Try again</button>}<button aria-label="Next frequency channel" disabled={choice?.revealed} onClick={() => setChoice(Math.min(end - 1, visibleSelection + 1), choice?.row ?? Math.floor(active.height / 2))} className="min-h-11 min-w-11 rounded-xl border border-white/20 px-3 text-lg text-white disabled:opacity-40">+</button></div>
           <p className="text-xs tabular-nums text-orange-200">{choice ? `Channel center: ${selectedFrequency.toFixed(6)} MHz` : "Tap the image or choose a channel."}</p>
         </div>
         <div className="mt-3 flex justify-between gap-3 text-xs tabular-nums text-slate-500"><span>{range[start].toFixed(6)}</span><span>Frequency (MHz)</span><span>{range[end - 1].toFixed(6)}</span></div>
@@ -139,12 +149,13 @@ export default function VoyagerLab() {
         <label className="mt-6 block text-sm text-slate-300">Display contrast: {contrast.toFixed(1)}<input type="range" aria-label="Display contrast" min=".5" max="2.5" step=".1" value={contrast} onChange={e => setContrast(Number(e.target.value))} className="mt-3 block w-full accent-cyan-300" /></label>
         <p className="mt-3 text-xs leading-6 text-slate-500">Contrast changes the colors, not the observations. The views use different frequency windows; read each axis when comparing them. Mid-resolution channels remain visibly coarse.</p>
         {choice?.revealed && <div className="mt-4 flex flex-wrap gap-4 text-sm"><span className="text-orange-300">Orange: your selection</span><span className="text-cyan-200">Cyan: carrier reference</span></div>}
+        {choice && (choice.column < start || choice.column >= end || (choice.revealed && (reference < start || reference >= end))) && <p className="mt-3 text-sm leading-6 text-amber-200">{choice.revealed && (reference < start || reference >= end) ? "The carrier reference is outside this window." : "Your selection is outside this window."} Move Frequency position or show the full field to find it.</p>}
       </div>
       <div className="space-y-6">
-        <div className="rounded-2xl border border-white/10 bg-slate-900/70 p-6"><p className="text-xs font-bold uppercase tracking-[.16em] text-cyan-300">{active.label}</p><h2 className="mt-3 text-2xl font-extrabold text-white">Find the carrier.</h2><p className="mt-4 text-sm leading-7 text-slate-400">Pick a candidate in the field. The slider selects native channels with a keyboard, using the middle of the scan. In the fine view, zoom to inspect a candidate more closely.</p>
+        <div className="rounded-2xl border border-white/10 bg-slate-900/70 p-6"><p className="text-xs font-bold uppercase tracking-[.16em] text-cyan-300">{active.label}</p><h2 className="mt-3 text-2xl font-extrabold text-white">Find the carrier.</h2><p className="mt-4 text-sm leading-7 text-slate-400">Pick a candidate in the field. The slider selects native channels with a keyboard, using the middle of the scan. Use Frequency zoom in either view to inspect a candidate more closely.</p>
           {mode === "mid" && <p className="mt-4 rounded-xl border border-cyan-300/20 bg-cyan-300/5 p-3 text-sm leading-7 text-cyan-100">Expected carrier: about {data.expectedCarrierMHz.toFixed(4)} MHz. Find the coarse channel containing that frequency; it need not be the brightest stripe.</p>}
-          <label className="mt-6 hidden text-sm text-slate-300 lg:block">Select a frequency channel<input type="range" aria-label="Select a frequency channel" min={start} max={end - 1} step="1" disabled={choice?.revealed} value={choice?.column ?? middle} onChange={e => setChoice(Number(e.target.value), Math.floor(active.height / 2))} className="mt-3 block w-full accent-orange-300" /></label>
-          <div className="mt-3 hidden gap-3 lg:flex"><button type="button" aria-label="Previous frequency channel" disabled={choice?.revealed} onClick={() => setChoice(Math.max(start, (choice?.column ?? middle) - 1), choice?.row ?? Math.floor(active.height / 2))} className="min-h-11 flex-1 rounded-xl border border-white/20 px-3 py-2 text-sm font-bold text-slate-200 disabled:opacity-40">− Channel</button><button type="button" aria-label="Next frequency channel" disabled={choice?.revealed} onClick={() => setChoice(Math.min(end - 1, (choice?.column ?? middle) + 1), choice?.row ?? Math.floor(active.height / 2))} className="min-h-11 flex-1 rounded-xl border border-white/20 px-3 py-2 text-sm font-bold text-slate-200 disabled:opacity-40">Channel +</button></div>
+          <label className="mt-6 hidden text-sm text-slate-300 lg:block">Select a frequency channel<input type="range" aria-label="Select a frequency channel" min={start} max={end - 1} step="1" disabled={choice?.revealed} value={visibleSelection} onChange={e => setChoice(Number(e.target.value), Math.floor(active.height / 2))} className="mt-3 block w-full accent-orange-300" /></label>
+          <div className="mt-3 hidden gap-3 lg:flex"><button type="button" aria-label="Previous frequency channel" disabled={choice?.revealed} onClick={() => setChoice(Math.max(start, visibleSelection - 1), choice?.row ?? Math.floor(active.height / 2))} className="min-h-11 flex-1 rounded-xl border border-white/20 px-3 py-2 text-sm font-bold text-slate-200 disabled:opacity-40">− Channel</button><button type="button" aria-label="Next frequency channel" disabled={choice?.revealed} onClick={() => setChoice(Math.min(end - 1, visibleSelection + 1), choice?.row ?? Math.floor(active.height / 2))} className="min-h-11 flex-1 rounded-xl border border-white/20 px-3 py-2 text-sm font-bold text-slate-200 disabled:opacity-40">Channel +</button></div>
           <p className="mt-3 break-words text-sm tabular-nums text-orange-200">{choice ? `Channel center: ${selectedFrequency.toFixed(6)} MHz at ${active.timeSeconds[choice.row].toFixed(1)} s` : "No selection yet"}</p>
           {mode === "mid" && choice && <p className="mt-2 text-xs leading-6 tabular-nums text-slate-500">Selected channel spans approximately {(selectedFrequency - nativeHz / 2e6).toFixed(6)}–{(selectedFrequency + nativeHz / 2e6).toFixed(6)} MHz.</p>}
           {!choice?.revealed ? <button disabled={!choice} onClick={() => setChoices(current => ({ ...current, [mode]: { ...choice!, revealed: true } }))} className="mt-6 hidden w-full rounded-full bg-cyan-200 lg:block px-5 py-3.5 text-sm font-bold text-slate-950 disabled:cursor-not-allowed disabled:opacity-40">Reveal the carrier</button> : <div className="mt-6" aria-live="polite"><p className="text-xl font-bold text-cyan-100">{matched ? mode === "fine" && choice.binWidth > 1 ? "You found its neighborhood." : "You found its channel." : "Look a little closer."}</p><p className="mt-3 text-sm leading-7 text-slate-400">Your selection is {distance} native {distance === 1 ? "channel" : "channels"} from the reference at that time. {mode === "mid" ? "At mid resolution, the goal is to identify the occupied coarse channel." : `The fine view accepts a selection within one display bin at the zoom where you picked (${choice.binWidth} native ${choice.binWidth === 1 ? "channel" : "channels"}).`}</p><button onClick={reset} className="mt-5 hidden rounded-full border border-cyan-200/40 lg:inline-flex px-5 py-3 text-sm font-bold text-cyan-200">Try this view again</button></div>}

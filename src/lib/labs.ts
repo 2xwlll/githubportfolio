@@ -35,6 +35,14 @@ export function projectedBicone(width: number, height: number, geometry: ConeGeo
   }
   return mask;
 }
+/** Logarithmic zoom over an integer native-channel window, clamped to the data. */
+export function waterfallViewport(width: number, zoom: number, center: number, minimumChannels: number) {
+  const minimum = Math.min(width, minimumChannels);
+  const span = Math.round(width / (width / minimum) ** (Math.max(0, Math.min(100, zoom)) / 100));
+  const start = Math.max(0, Math.min(width - span, Math.round(center - (span - 1) / 2)));
+  return { start, end: start + span };
+}
+
 /** Keep a narrow real feature visible when many native channels share a screen bin. */
 export function maximumBinnedWaterfall(pixels: readonly number[], width: number, height: number, start: number, end: number, maxBins = 256) {
   const bins = Math.min(maxBins, end - start);
