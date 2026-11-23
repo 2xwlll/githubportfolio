@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import HeroVideo from "@/components/HeroVideo";
-import ObservatoryInvitation from "@/components/ObservatoryInvitation";
 import { useEffect, useState } from "react";
 
 const identityLines = [
@@ -61,7 +60,6 @@ export default function Hero() {
         </div>
         <div className="mt-16 flex items-center gap-4 text-xs uppercase tracking-[.2em] text-slate-400"><span className="h-px w-14 bg-slate-600" /> Research, projects, and background</div>
       </div>
-      <div className="pointer-events-none absolute inset-x-0 top-28 z-10 mx-auto flex max-w-7xl justify-end px-5 sm:px-8 lg:bottom-28 lg:top-auto"><ObservatoryInvitation /></div>
     </section>
   );
 }

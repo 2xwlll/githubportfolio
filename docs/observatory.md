@@ -1,6 +1,6 @@
 # After-hours observatory
 
-The public entry point is `/observatory`, linked by Professor Ribbit’s **Come learn!** invitation on the homepage and **After hours** in the footer. The interactive pages are `/observatory/cones` and `/observatory/voyager`. Professor Ribbit is an original SVG character in `public/images/observatory/`. His homepage animation uses only transforms/opacity and becomes static with reduced motion; the link disables route prefetch.
+The public entry point is `/observatory`, linked by Professor Ribbit’s small **Come learn!** invitation beside the homepage’s selected projects and **After hours** in the footer. The hero remains focused on the scientific introduction. The interactive pages are `/observatory/cones` and `/observatory/voyager`. Professor Ribbit is an original SVG character in `public/images/observatory/`. His animation uses only transforms/opacity and becomes static with reduced motion; the link disables route prefetch.
 
 The homepage does not import the lab clients or their data. Each client fetches its prepared example only after its own page opens. No live model service, user upload, account, or external API key is required.
 
@@ -54,11 +54,17 @@ The source collection is the public Breakthrough Listen Voyager archive at `http
 
 The carrier reference is a guided known-source comparison, not a blind technosignature detector. Native mid-resolution channels cannot support the fine-resolution drift precision. Display contrast does not rerun a search or alter observations. The source-matched single scan is not an ON/OFF validation; the linked Colab tutorial covers the cadence and more complete workflow.
 
-The paired scan starts at MJD 59046.92634259259 (2020-07-16 22:13:56 UTC). Fine shows 512 native spectral channels across all 16 integrations (2.7939677 Hz, 18.253611 s). Mid shows 57 native channels and every fourth integration (2861.02295 Hz native channel width, 1.073741824 s native integration, 4.294967296 s displayed sample spacing). The windows have different frequency spans.
+The paired scan starts at MJD 59046.92634259259 (2020-07-16 22:13:56 UTC). Fine now covers **16,384 native spectral channels**, a 32× wider search field than the original 512-channel crop, across all 16 integrations (2.7939677 Hz, 18.253611 s). The carrier lies around 35% of the frequency window rather than its center; real neighboring features make the search less obvious. The original 512-channel linear-power data, physical axes, and guided reference were verified to match exactly inside the new cutout. Mid remains 57 native channels and every fourth integration (2861.02295 Hz native channel width, 1.073741824 s native integration, 4.294967296 s displayed sample spacing).
+
+The browser shows up to 256 frequency bins, taking the **maximum** prepared native sample per bin at each time. This keeps narrow real features from disappearing under image downsampling. It is a display overview, not averaged power or a new native spectral resolution; fine drift is unresolved in the broad view. Select a candidate and zoom to 512, then 256 native channels for closer inspection. Axes and slider limits follow the zoom. The optional hint discloses the expected frequency; it is hidden initially. No artificial noise, extra signals, attenuation, or spectral interpolation is introduced. Contrast remains a color-only control. The native NPZ and normalized native JSON pixels remain downloadable.
+
+Fine feedback allows a distance of one display bin at **selection time**, recorded in native-channel units. It therefore remains fair when selecting a coarse overview bin and does not change if the visitor expands the view after reveal. Mid still requires the actual carrier channel. Reset restores the full fine field and hides the hint; resolution switches preserve each choice.
 
 `fine-cutout.npz` and `mid-cutout.npz` preserve compact linear-power arrays, frequency/time axes, and guided reference indices. `public/labs/voyager/reproduce.py` checks their float32 sample hashes and reconstructs every prepared display pixel and reference column with NumPy. Hashes describe little-endian float32 array bytes, not the NPZ archive container. The bright mid-resolution sidebands are not the carrier; its expected frequency is about 8419.5427 MHz, within the channel centered at 8419.541358947754 MHz.
 
 To re-extract from the public files, use `scripts/prepare_voyager_lab.py --output public/labs/voyager` in a research Python environment with `numpy`, `h5py`, `fsspec[http]`, and `bitshuffle`. It uses bounded HTTP range reads of the native compressed chunks, not a full-file download. Full native fine data are about 57 GB; regeneration still transfers tens of MB of compressed chunks. The website has no Python or HDF5 dependency at runtime.
+
+The default fine width is 16,384 channels with `--fine-carrier-fraction .35`. `--mode fine --output /tmp/new-fine-example` can prepare a single-mode staging export; merge it with the unchanged paired mid snapshot before using it on the website, which requires both modes.
 
 ## Updating the experience
 

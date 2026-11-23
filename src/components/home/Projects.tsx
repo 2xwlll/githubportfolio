@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import ObservatoryInvitation from "@/components/ObservatoryInvitation";
 
 const projects = [
   {
@@ -62,6 +63,7 @@ export default function Projects() {
               </a>
             ))}
           </div>
+          <div className="mt-12 flex justify-end"><ObservatoryInvitation /></div>
         </div>
       </section>
     </>

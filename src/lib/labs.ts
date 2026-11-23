@@ -35,3 +35,18 @@ export function projectedBicone(width: number, height: number, geometry: ConeGeo
   }
   return mask;
 }
+/** Keep a narrow real feature visible when many native channels share a screen bin. */
+export function maximumBinnedWaterfall(pixels: readonly number[], width: number, height: number, start: number, end: number, maxBins = 256) {
+  const bins = Math.min(maxBins, end - start);
+  const result = new Uint8Array(bins * height);
+  for (let row = 0; row < height; row++) {
+    for (let bin = 0; bin < bins; bin++) {
+      const from = start + Math.floor(bin * (end - start) / bins);
+      const to = start + Math.floor((bin + 1) * (end - start) / bins);
+      let peak = 0;
+      for (let col = from; col < to; col++) peak = Math.max(peak, pixels[row * width + col]);
+      result[row * bins + bin] = peak;
+    }
+  }
+  return { width: bins, pixels: result };
+}
