@@ -23,7 +23,7 @@ const projects = [
   {
     title: "Honors College Event Analyzer",
     text: "A Python application for analyzing Honors College attendance through event categories, SPICES themes, and keyword relationships.",
-    image: "/images/general/research-agentic.jpg",
+    image: "/images/previews/utsa-event-analyzer.svg",
     tag: "Student engagement",
     language: "Python",
     update: "Generates statistics and visualizations to support event planning and assessment of student engagement.",

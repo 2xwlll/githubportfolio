@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" fill="none">
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1600" y2="1000" gradientUnits="userSpaceOnUse"><stop stop-color="#0b2346"/><stop offset="1" stop-color="#030d20"/></linearGradient>
+    <linearGradient id="orange" x1="950" y1="350" x2="1400" y2="800" gradientUnits="userSpaceOnUse"><stop stop-color="#ffad62"/><stop offset="1" stop-color="#ef681e"/></linearGradient>
+    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" stroke="#8ab5e5" stroke-opacity=".07"/></pattern>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#background)"/>
+  <rect width="1600" height="1000" fill="url(#grid)"/>
+  <circle cx="1420" cy="100" r="390" fill="#153b67" fill-opacity=".35"/>
+  <circle cx="110" cy="1050" r="480" fill="#153b67" fill-opacity=".3"/>
+  <rect x="110" y="112" width="12" height="146" rx="6" fill="#f58236"/>
+  <text x="156" y="202" fill="#fff" font-family="Arial, Helvetica, sans-serif" font-size="108" font-weight="800" letter-spacing="2">UTSA</text>
+  <text x="160" y="263" fill="#bdd1e8" font-family="Arial, Helvetica, sans-serif" font-size="39" font-weight="600" letter-spacing="7">HONORS COLLEGE</text>
+  <!-- An illustrative campus and event calendar, with no sample attendance claims. -->
+  <g stroke="#829ec2" stroke-width="4" stroke-linejoin="round">
+    <path d="M112 789V575L280 501L448 575V789" fill="#102c50"/>
+    <path d="M448 789V467L619 384L790 467V789" fill="#16375b"/>
+    <path d="M790 789V575L912 521L1034 575V789" fill="#102c50"/>
+    <path d="M93 575L280 492L467 575M427 467L619 374L811 467M771 575L912 511L1053 575" stroke="#b4c8e0" stroke-width="7"/>
+    <path d="M537 789V650A82 82 0 0 1 701 650V789" fill="#06172e"/>
+    <path d="M619 384V317" stroke="#f58236" stroke-width="5"/>
+    <path d="M621 318H700L675 341H621" fill="#f58236" stroke="#f58236"/>
+    <path d="M164 621H205V671H164ZM252 621H293V671H252ZM340 621H381V671H340Z" fill="#35567c" stroke="none"/>
+    <path d="M501 493H541V541H501ZM599 493H639V541H599ZM697 493H737V541H697Z" fill="#6c8aac" stroke="none"/>
+    <path d="M836 621H875V671H836ZM930 621H969V671H930Z" fill="#35567c" stroke="none"/>
+    <path d="M94 790H1084" stroke="#b4c8e0" stroke-width="6"/>
+    <path d="M77 820H1101M60 850H1118" stroke="#517295" stroke-width="5"/>
+  </g>
+  <g transform="translate(1020 378) rotate(7 210 215)">
+    <rect x="-18" y="18" width="438" height="444" rx="38" fill="#020817" fill-opacity=".5"/>
+    <rect width="420" height="420" rx="32" fill="#eaf1f9"/>
+    <path d="M0 32A32 32 0 0 1 32 0H388A32 32 0 0 1 420 32V110H0Z" fill="url(#orange)"/>
+    <path d="M104-20V35M316-20V35" stroke="#dce8f5" stroke-width="19" stroke-linecap="round"/>
+    <g fill="#c0cede"><rect x="46" y="150" width="75" height="63" rx="12"/><rect x="172" y="150" width="75" height="63" rx="12"/><rect x="298" y="150" width="75" height="63" rx="12"/><rect x="46" y="257" width="75" height="63" rx="12"/><rect x="298" y="257" width="75" height="63" rx="12"/></g>
+    <rect x="165" y="249" width="89" height="81" rx="16" fill="#f58236"/>
+    <path d="M186 289L204 307L235 274" stroke="white" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g transform="translate(965 730)">
+    <rect width="180" height="164" rx="24" fill="#102a4d" stroke="#7494ba" stroke-width="3"/>
+    <path d="M37 125V87M76 125V63M115 125V36" stroke="#ff9951" stroke-width="20" stroke-linecap="round"/>
+    <path d="M23 139H151" stroke="#7c9bbb" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <rect x="112" y="915" width="1376" height="3" rx="1.5" fill="#48698f" fill-opacity=".4"/>
+</svg>
