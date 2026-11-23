@@ -37,3 +37,7 @@ npm install
 
 npm run dev
 
+
+## Updating track and field marks
+
+Edit [public/data/track-results.json](public/data/track-results.json) to update the interactive track on `/athletics`. See [the results guide](docs/track-results.md) for units, optional meet details, and adding results over time.

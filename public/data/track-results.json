@@ -1,0 +1,32 @@
+{
+  "100m": {
+    "label": "100 metres",
+    "unit": "s",
+    "notes": "",
+    "results": [{ "mark": 10.8, "date": null, "meet": null, "venue": null, "sourceUrl": null }]
+  },
+  "200m": {
+    "label": "200 metres",
+    "unit": "s",
+    "notes": "",
+    "results": [{ "mark": 22.6, "date": null, "meet": null, "venue": null, "sourceUrl": null }]
+  },
+  "400m": {
+    "label": "400 metres",
+    "unit": "s",
+    "notes": "I don’t run this one often.",
+    "results": [{ "mark": 52, "date": null, "meet": null, "venue": null, "sourceUrl": null }]
+  },
+  "long-jump": {
+    "label": "Long jump",
+    "unit": "ft",
+    "notes": "",
+    "results": [{ "mark": 22.1, "date": null, "meet": null, "venue": null, "sourceUrl": null }]
+  },
+  "triple-jump": {
+    "label": "Triple jump",
+    "unit": "ft",
+    "notes": "",
+    "results": [{ "mark": 38, "date": null, "meet": null, "venue": null, "sourceUrl": null }]
+  }
+}
