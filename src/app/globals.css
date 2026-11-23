@@ -275,6 +275,19 @@
   }
 }
 
+@keyframes ribbit-peek {
+  0%, 100% { transform: translateY(4px) rotate(-4deg); }
+  50% { transform: translateY(-3px) rotate(2deg); }
+}
+@keyframes ribbit-magic {
+  0%, 100% { transform: translateY(0) rotate(-2deg); opacity: .82; }
+  50% { transform: translateY(-5px) rotate(2deg); opacity: 1; }
+}
+.ribbit-peek { animation: ribbit-peek 5s ease-in-out infinite; }
+.ribbit-magic { animation: ribbit-magic 3.8s ease-in-out infinite; }
+.ribbit-invitation:hover .ribbit-peek,
+.ribbit-invitation:focus-visible .ribbit-peek { animation-play-state: paused; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

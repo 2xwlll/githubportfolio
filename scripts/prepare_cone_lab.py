@@ -10,6 +10,7 @@ import numpy as np
 from PIL import Image
 from scipy.ndimage import zoom
 import torch
+from prepare_cone_literature import export as export_literature
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--repo', type=Path, required=True)
@@ -78,4 +79,5 @@ case = {
     }
 }
 (output / 'ngc1068.json').write_text(json.dumps(case, separators=(',', ':')))
+export_literature(repo, output / 'ngc1068.json')
 print(json.dumps({'case': case['id'], 'grid': [size, size], 'predictedPixels': int(model_mask.sum()), 'modelVsClassicalIoU': case['expectedModelReferenceIoU'], 'jsonBytes': (output / 'ngc1068.json').stat().st_size}))

@@ -8,6 +8,13 @@ type ConeCase = {
   id: string; title: string; kind: string; band: string; width: number; height: number;
   imageUrl: string; modelMask: number[]; referenceMask: number[]; referenceLabel: string;
   threshold: number; expectedModelReferenceIoU: number;
+  literature: {
+    label: string; url: string; paperUrl: string; limits: string; projection: string; angularScale: string;
+    mask: number[]; outerOutlines: number[][][]; innerWallGuides: number[][][]; centerPixel: number[];
+    centeringChecks: number[][][][]; compassVectors: { east: number[]; north: number[] };
+    expectedModelIoU: number; projectedFullOuterOpeningDeg: number;
+    registration: { method: string; limits: string };
+  };
   source: { projectUrl: string; observationUrl: string; observationId: string; checkpoint: string; sha256: Record<string, string>; display: string; inference: string; limits: string };
 };
 
@@ -22,6 +29,8 @@ export default function ConeLab() {
   const [showModel, setShowModel] = useState(true);
   const [showVisitor, setShowVisitor] = useState(true);
   const [showClassical, setShowClassical] = useState(false);
+  const [showLiterature, setShowLiterature] = useState(true);
+  const [showCentering, setShowCentering] = useState(false);
   const [painted, setPainted] = useState(0);
   const [cursorVisible, setCursorVisible] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -37,7 +46,7 @@ export default function ConeLab() {
       if (!r.ok) throw new Error("Example unavailable");
       return r.json();
     }).then((example: ConeCase) => {
-      if (example.modelMask.length !== example.width * example.height || example.referenceMask.length !== example.modelMask.length) throw new Error("Mismatched pixel grids");
+      if (example.modelMask.length !== example.width * example.height || example.referenceMask.length !== example.modelMask.length || example.literature.mask.length !== example.modelMask.length) throw new Error("Mismatched pixel grids");
       maskRef.current = new Uint8Array(example.width * example.height);
       const image = new window.Image();
       image.onload = () => { if (!controller.signal.aborted) { imageRef.current = image; setData(example); } };
@@ -70,11 +79,43 @@ export default function ConeLab() {
     }
     lc.putImageData(overlay, 0, 0);
     context.drawImage(layer, 0, 0);
+    if (revealed && showLiterature) {
+      const trace = (polygon: number[][]) => {
+        context.beginPath();
+        polygon.forEach(([x, y], i) => { if (i === 0) context.moveTo(x, y); else context.lineTo(x, y); });
+        context.closePath(); context.stroke();
+      };
+      context.save();
+      context.translate(.5, .5); // exported coordinates locate zero-indexed pixel centers
+      context.strokeStyle = "#a3e635"; context.lineWidth = .65;
+      data.literature.outerOutlines.forEach(trace);
+      context.setLineDash([1.5, 1]); context.lineWidth = .4;
+      data.literature.innerWallGuides.forEach(trace);
+      if (showCentering) {
+        context.strokeStyle = "#facc15"; context.lineWidth = .25; context.setLineDash([.7, 1]);
+        data.literature.centeringChecks.forEach(pair => pair.forEach(trace));
+      }
+      context.setLineDash([]); context.strokeStyle = "#a3e635"; context.lineWidth = .5;
+      const [cx, cy] = data.literature.centerPixel;
+      context.beginPath(); context.moveTo(cx - 2, cy); context.lineTo(cx + 2, cy); context.moveTo(cx, cy - 2); context.lineTo(cx, cy + 2); context.stroke();
+      // WCS-derived compass; image angles are not assumed to be celestial PAs.
+      context.strokeStyle = "#fff"; context.fillStyle = "#fff"; context.font = "3.2px sans-serif";
+      for (const [label, vector] of [["N", data.literature.compassVectors.north], ["E", data.literature.compassVectors.east]] as const) {
+        const length = Math.hypot(...vector);
+        const [dx, dy] = vector.map(v => v / length * 7);
+        context.beginPath(); context.moveTo(16, 16); context.lineTo(16 + dx, 16 + dy); context.stroke();
+        context.fillText(label, 15 + dx, 15 + dy);
+      }
+      const arcsec = Math.hypot(...data.literature.compassVectors.east);
+      context.beginPath(); context.moveTo(6, 119); context.lineTo(6 + arcsec, 119); context.stroke();
+      context.fillText('1″', 6, 116);
+      context.restore();
+    }
     if (cursorVisible && !revealed && tool === "paint") {
       context.strokeStyle = "#fff"; context.lineWidth = .5;
       context.beginPath(); context.arc(cursorRef.current.x, cursorRef.current.y, brush, 0, Math.PI * 2); context.stroke();
     }
-  }, [data, revealed, showModel, showVisitor, showClassical, brush, cursorVisible, tool]);
+  }, [data, revealed, showModel, showVisitor, showClassical, showLiterature, showCentering, brush, cursorVisible, tool]);
 
   useEffect(() => { render(); }, [render]);
   const updateCount = () => setPainted(maskRef.current.reduce((total, value) => total + value, 0));
@@ -97,19 +138,20 @@ export default function ConeLab() {
     return { x: Math.max(0, Math.min(data!.width - 1, (event.clientX - rect.left) / rect.width * data!.width)), y: Math.max(0, Math.min(data!.height - 1, (event.clientY - rect.top) / rect.height * data!.height)) };
   };
   const reset = () => {
-    maskRef.current.fill(0); setTool("paint"); setMode("paint"); setPainted(0); setRevealed(false); setShowModel(true); setShowVisitor(true); setShowClassical(false); lastPoint.current = null; render();
+    maskRef.current.fill(0); setTool("paint"); setMode("paint"); setPainted(0); setRevealed(false); setShowModel(true); setShowVisitor(true); setShowClassical(false); setShowLiterature(true); setShowCentering(false); lastPoint.current = null; render();
   };
 
   if (error) return <div className="rounded-2xl border border-white/10 p-8"><p>The cone example couldn’t load.</p><button onClick={() => window.location.reload()} className="mt-4 rounded-full bg-cyan-200 px-5 py-3 font-bold text-slate-950">Try again</button></div>;
   if (!data) return <p className="rounded-2xl border border-white/10 p-8 text-slate-400" role="status">Opening the observation…</p>;
   const score = maskAgreement(maskRef.current, data.modelMask);
+  const literatureScore = maskAgreement(maskRef.current, data.literature.mask);
   const geometryControls = (compact: boolean) => <div className={compact ? "grid grid-cols-2 gap-4" : "space-y-4"}>{([
     ["cx", "Center X", 0, data.width - 1, "px"], ["cy", "Center Y", 0, data.height - 1, "px"], ["axis", "Axis angle", 0, 179, "°"], ["opening", "Full opening", 10, 170, "°"], ["extent", "Extent", 5, 90, "px"],
   ] as [keyof ConeGeometry, string, number, number, string][]).map(([key, label, min, max, unit]) => <label key={key} className="block text-sm text-slate-300">{label}: <span className="tabular-nums">{geometry[key]}{unit}</span><input type="range" aria-label={label} min={min} max={max} step={1} value={geometry[key]} onChange={event => applyGeometry({ ...geometry, [key]: Number(event.target.value) })} className="mt-2 block w-full accent-cyan-300" /></label>)}</div>;
 
 
   return <div>
-    <FrogGuide>{revealed ? "Ribbit! The cyan region is the model’s interpretation. Agreement is interesting; disagreement is a question worth asking. Neither of you gets to declare the sky solved." : "Your turn first. Paint the extended cone-shaped structure you see, then reveal what the model marked. Bright gas and the edge of a cone are not always the same thing."}</FrogGuide>
+    <FrogGuide>{revealed ? "Ribbit! Now compare three views: your trace, the cyan U-Net region, and the green published geometry. The sky’s bright gas need not fill the whole geometric cone. Where do they agree, and why might they differ?" : "Your turn first. Paint the extended cone-shaped structure you see, then reveal the U-Net result and a published 3D cone projected onto this HST image. Bright gas and the edge of a cone are not always the same thing."}</FrogGuide>
     {!revealed && <div className="mt-6"><div role="group" aria-label="Cone tracing method" className="mt-6 flex flex-wrap gap-2"><button onClick={() => setTool("paint")} aria-pressed={tool === "paint"} className={`rounded-xl border px-4 py-3 text-sm font-bold ${tool === "paint" ? "border-cyan-200 bg-cyan-200 text-slate-950" : "border-white/20 text-slate-200"}`}>Paint region</button><button onClick={() => { setTool("geometry"); applyGeometry(geometry); }} aria-pressed={tool === "geometry"} className={`rounded-xl border px-4 py-3 text-sm font-bold ${tool === "geometry" ? "border-cyan-200 bg-cyan-200 text-slate-950" : "border-white/20 text-slate-200"}`}>Adjust geometry</button></div></div>}
     <div className="mt-8 grid items-start gap-8 lg:grid-cols-[1.2fr_.8fr]">
       <div>
@@ -129,7 +171,8 @@ export default function ConeLab() {
             }} />
         </div>
         <p id="cone-instructions" className="mt-4 text-sm leading-6 text-slate-400">{tool === "paint" ? "Drag to paint; use Erase to revise. Keyboard: focus the image, move with arrow keys, press Space to paint or Backspace to erase. Shift moves faster." : "Use the sliders to trace a projected bicone. Click the image to position its center. Axis angle is measured counterclockwise from the image’s horizontal axis; the opening is a full projected angle."}</p>
-        <div className="mt-4 flex flex-wrap gap-4 text-sm"><span className="text-orange-300">Orange: you</span>{revealed && <><span className="text-cyan-300">Cyan: model</span><span className="text-stone-200">Cream: overlap</span>{showClassical && <span className="text-purple-300">Purple: classical extraction</span>}</>}</div>
+        <div className="mt-4 flex flex-wrap gap-4 text-sm"><span className="text-orange-300">Orange: you</span>{revealed && <><span className="text-cyan-300">Cyan: model</span><span className="text-stone-200">Cream: you + model</span>{showLiterature && <span className="text-lime-300">Green outlines: published geometry</span>}{showClassical && <span className="text-purple-300">Purple: classical extraction</span>}</>}</div>
+        {revealed && <p className="mt-3 text-sm leading-6 text-slate-400">Solid green: outer envelope. Dashed green: inner-wall projection guides, not a hole in the 2D image. Cross: adopted hidden nucleus. N/E and the 1″ scale come from the HST coordinates.</p>}
       </div>
       <div className="space-y-6">
         <div className="rounded-2xl border border-white/10 bg-slate-900/70 p-6">
@@ -140,15 +183,31 @@ export default function ConeLab() {
             <label className="mt-6 block text-sm text-slate-300">Brush radius: {brush} pixels<input aria-label="Brush radius" type="range" min="1" max="16" value={brush} onChange={e => setBrush(Number(e.target.value))} className="mt-3 block w-full accent-cyan-300" /></label>
             </>}
             <p className="mt-4 text-sm tabular-nums text-slate-500">{painted.toLocaleString()} pixels marked</p>
-            <button onClick={() => { updateCount(); setRevealed(true); }} disabled={!painted} className="mt-6 w-full rounded-full bg-cyan-200 px-5 py-3.5 text-sm font-bold text-slate-950 disabled:cursor-not-allowed disabled:opacity-40">Reveal the model</button>
+            <button onClick={() => { updateCount(); setRevealed(true); }} disabled={!painted} className="mt-6 w-full rounded-full bg-cyan-200 px-5 py-3.5 text-sm font-bold text-slate-950 disabled:cursor-not-allowed disabled:opacity-40">Reveal model + literature</button>
             <button onClick={() => { maskRef.current.fill(0); setPainted(0); setRevealed(true); }} className="mt-4 text-sm font-bold text-cyan-200">My prediction: no cone</button>
           </> : <>
-            <div className="mt-6" aria-live="polite"><p className="text-sm text-slate-400">Your overlap with the model</p><p className="mt-2 text-5xl font-black tabular-nums text-cyan-100">{(score.iou * 100).toFixed(1)}<span className="ml-1 text-2xl">%</span></p><p className="mt-3 text-sm leading-7 text-slate-400">Intersection-over-union: shared marked pixels divided by all pixels either of you marked. This measures agreement, not accuracy.</p></div>
-            <div className="mt-6 space-y-3 text-sm text-slate-300"><label className="flex items-center gap-3"><input type="checkbox" checked={showVisitor} onChange={e => setShowVisitor(e.target.checked)} className="accent-orange-300" />Your region</label><label className="flex items-center gap-3"><input type="checkbox" checked={showModel} onChange={e => setShowModel(e.target.checked)} className="accent-cyan-300" />Model region</label><label className="flex items-center gap-3"><input type="checkbox" checked={showClassical} onChange={e => setShowClassical(e.target.checked)} className="accent-purple-300" />Classical extraction</label></div>
+            <div className="mt-6" aria-live="polite">
+              <div className="grid grid-cols-2 gap-4"><div><p className="text-sm text-slate-400">You + U-Net</p><p className="mt-2 text-3xl font-black tabular-nums text-cyan-100">{(score.iou * 100).toFixed(1)}%</p></div><div><p className="text-sm text-slate-400">You + literature</p><p className="mt-2 text-3xl font-black tabular-nums text-lime-200">{(literatureScore.iou * 100).toFixed(1)}%</p></div></div>
+              <p className="mt-4 text-sm text-slate-300">U-Net + literature: {(data.literature.expectedModelIoU * 100).toFixed(1)}% IoU.</p>
+              <p className="mt-3 text-sm leading-7 text-slate-400">IoU is shared area divided by combined area, within this image. These measure agreement between different definitions: an image trace, a segmentation, and a projected geometric envelope. They are not accuracy scores.</p>
+            </div>
+            <div className="mt-6 space-y-3 text-sm text-slate-300"><label className="flex min-h-8 items-center gap-3"><input type="checkbox" checked={showVisitor} onChange={e => setShowVisitor(e.target.checked)} className="accent-orange-300" />Your region</label><label className="flex min-h-8 items-center gap-3"><input type="checkbox" checked={showModel} onChange={e => setShowModel(e.target.checked)} className="accent-cyan-300" />Model region</label><label className="flex min-h-8 items-center gap-3"><input type="checkbox" checked={showLiterature} onChange={e => setShowLiterature(e.target.checked)} className="accent-lime-300" />Published geometry</label><label className="flex min-h-8 items-center gap-3"><input type="checkbox" checked={showClassical} onChange={e => setShowClassical(e.target.checked)} className="accent-purple-300" />Classical extraction</label></div>
             <button onClick={reset} className="mt-6 w-full rounded-full border border-cyan-200/50 px-5 py-3 text-sm font-bold text-cyan-100">Try again</button>
           </>}
         </div>
-        <details className="rounded-2xl border border-white/10 p-5"><summary className="cursor-pointer text-sm font-bold text-cyan-200">Inspect the evidence</summary><div className="mt-4 space-y-4 break-words text-sm leading-7 text-slate-400"><p>{data.source.inference}</p><p>{data.source.display}</p><p>{data.source.limits}</p><p>{data.referenceLabel}.</p><p>Frozen model/classical overlap: {(data.expectedModelReferenceIoU * 100).toFixed(1)}% IoU.</p><p>Checkpoint: <code className="text-xs">{data.source.checkpoint}</code></p><a href="/labs/cones/ngc1068.json" download className="block font-bold text-cyan-200">Download this example and provenance</a><a href="/labs/cones/reproduce.py" download className="block font-bold text-cyan-200">Download the reproducibility script</a><a href={data.source.projectUrl} target="_blank" rel="noreferrer" className="block font-bold text-cyan-200">Research code</a><a href={data.source.observationUrl} target="_blank" rel="noreferrer" className="block font-bold text-cyan-200">HST data archive (MAST)</a></div></details>
+        {revealed && <section className="rounded-2xl border border-lime-200/25 bg-lime-200/[.035] p-5 sm:p-6" aria-label="Published cone reference">
+          <h3 className="text-lg font-extrabold text-lime-100">A reference from the literature</h3>
+          <p className="mt-3 text-sm leading-7 text-slate-300"><a href={data.literature.paperUrl} target="_blank" rel="noreferrer" className="font-bold text-lime-200 underline decoration-lime-200/40 underline-offset-4">Das et al. (2006), Table 2</a> fit the [O III] gas velocities with a 3D biconical outflow.</p>
+          <dl className="mt-4 grid grid-cols-[1fr_auto] gap-x-4 gap-y-3 text-sm text-slate-300">
+            <dt>Sky axis, east of north</dt><dd>30 ± 2°</dd><dt>Inner half-opening</dt><dd>20 ± 2°</dd><dt>Outer half-opening</dt><dd>40 ± 2°</dd><dt>Tilt out of sky plane</dt><dd>5 ± 2°</dd><dt>Nearer lobe</dt><dd>NE</dd><dt>Axial extent per lobe</dt><dd>400 ± 16 pc</dd>
+          </dl>
+          <p className="mt-4 text-sm leading-7 text-slate-400">Full intrinsic outer opening: 80°. Our projection gives {data.literature.projectedFullOuterOpeningDeg.toFixed(2)}° on the sky. The finite outline uses the paper’s 72 pc/arcsec scale and is clipped by this image.</p>
+          <p className="mt-3 text-sm leading-7 text-slate-400">The apex uses the continuum peak as a hotspot proxy, shifted 0.02″ west and 0.13″ south following the paper. This registration is an assumption; the relative offset has a quoted ±0.10″ uncertainty per direction.</p>
+          <label className="mt-4 flex min-h-11 items-center gap-3 text-sm text-amber-200"><input type="checkbox" checked={showCentering} onChange={e => { setShowCentering(e.target.checked); setShowLiterature(true); }} className="accent-amber-300" />Show ±0.10″ centering checks</label>
+          {showCentering && <p className="mt-2 text-sm leading-6 text-slate-400">Dotted yellow outlines shift only the center east/west/north/south. These are sensitivity checks, not a confidence boundary; the overlap numbers use the adopted center.</p>}
+          <p className="mt-4 text-sm leading-7 text-slate-300">A published kinematic model is a physical comparison, not a ground-truth emission mask. Gas and dust determine how much of this geometry is visible.</p>
+        </section>}
+        <details className="rounded-2xl border border-white/10 p-5"><summary className="cursor-pointer text-sm font-bold text-cyan-200">Inspect the evidence</summary><div className="mt-4 space-y-4 break-words text-sm leading-7 text-slate-400"><p>{data.source.inference}</p><p>{data.source.display}</p><p>{data.source.limits}</p><p>{data.referenceLabel}.</p>{revealed && <><p>{data.literature.projection}</p><p>{data.literature.angularScale}</p><p>{data.literature.registration.method}</p><p>{data.literature.registration.limits}</p><p>{data.literature.limits}</p></>}<p>Frozen model/classical overlap: {(data.expectedModelReferenceIoU * 100).toFixed(1)}% IoU.</p><p>Checkpoint: <code className="text-xs">{data.source.checkpoint}</code></p><a href="/labs/cones/ngc1068.json" download className="block font-bold text-cyan-200">Download this example and provenance</a><a href="/labs/cones/reproduce.py" download className="block font-bold text-cyan-200">Download the reproducibility script</a><a href={data.source.projectUrl} target="_blank" rel="noreferrer" className="block font-bold text-cyan-200">Research code</a><a href={data.source.observationUrl} target="_blank" rel="noreferrer" className="block font-bold text-cyan-200">HST data archive (MAST)</a></div></details>
       </div>
     </div>
   </div>;

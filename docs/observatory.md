@@ -1,6 +1,6 @@
 # After-hours observatory
 
-The public entry point is `/observatory`, linked by **After hours** in the footer. The interactive pages are `/observatory/cones` and `/observatory/voyager`. Professor Ribbit is an original SVG character in `public/images/observatory/`.
+The public entry point is `/observatory`, linked by Professor Ribbit’s **Come learn!** invitation on the homepage and **After hours** in the footer. The interactive pages are `/observatory/cones` and `/observatory/voyager`. Professor Ribbit is an original SVG character in `public/images/observatory/`. His homepage animation uses only transforms/opacity and becomes static with reduced motion; the link disables route prefetch.
 
 The homepage does not import the lab clients or their data. Each client fetches its prepared example only after its own page opens. No live model service, user upload, account, or external API key is required.
 
@@ -24,7 +24,29 @@ Both interaction modes generate a binary region on that same grid:
 - Paint mode supports a mouse, touch, and keyboard cursor.
 - Geometry mode constructs a symmetric projected 2D bicone. Axis angle is counterclockwise from the image’s rightward horizontal axis; the displayed Y coordinate increases downward. Opening is the **full projected angle**, and extent is a pixel radius. This is an image tracing tool, not an intrinsic 3D opening-angle measurement.
 
-Scoring is visitor/model intersection-over-union. It is **agreement, not observational accuracy**. The optional purple mask is a classical extraction, not independent ground truth. The all-empty convention is IoU = 1; the explicit “no cone” choice permits an intentional empty prediction.
+Scoring shows visitor/model, visitor/literature, and model/literature intersection-over-union. It is **agreement, not observational accuracy**: visible-emission segmentation and geometric support are different targets. The optional purple mask is a classical extraction, not independent ground truth. The all-empty convention is IoU = 1; the explicit “no cone” choice permits an intentional empty prediction.
+
+### Published geometric reference
+
+[Das et al. (2006), Sections 2/4 and Table 2](https://arxiv.org/pdf/astro-ph/0603803) supply a kinematic bicone fit: PA 30 ± 2° east of north, inner/outer half-openings 20 ± 2° and 40 ± 2°, tilt 5 ± 2° from the sky plane (NE nearer), and axial extent 400 ± 16 pc per lobe. These are intrinsic 3D model parameters, not an HST brightness contour or a direct torus measurement.
+
+`scripts/prepare_cone_literature.py` projects the finite cone using its apex and circular end ring, rather than an arbitrary circular radial cutoff. The orthographic outer envelope has full angular width `2 asin(sin(40°)/cos(5°)) = 80.3678°`. Solid green outlines show the projected outer footprint; dashed inner-wall guides do **not** remove an empty 2D wedge. A hollow 3D shell can project onto the central sky axis. Overlap uses the full outer footprint clipped to the image. This is geometric support, not predicted emission intensity.
+
+The paper adopts 14.4 Mpc and states a rounded scale of 72 pc/arcsec. We use its stated 72 pc/arcsec to project its axial length, retaining the distinction from the exact small-angle conversion of 14.4 Mpc (~69.81 pc/arcsec).
+
+Registration reconstructs the saved 400-pixel continuum-subtracted map from the two source FITS files and requires exact pixel equality. The F547M smoothed peak is a **hotspot proxy**, shifted 0.02″ west and 0.13″ south using the paper’s relative hidden-nucleus offset. Celestial FITS WCS maps the sky geometry through both crops, endpoint-aligned SciPy resampling, and the display’s vertical flip. Zero-indexed pixel centers are rendered with a half-pixel canvas offset. The WCS/header, full-image crop origin, nucleus coordinates, source hashes, projection, and masks travel with the JSON.
+
+The FITS frame (FK5, J2000), equinox, asinh preprocessing, and frozen lab input are also verified or recorded; coordinates must retain their frame rather than silently treating them as ICRS. The hotspot identification remains an assumption; this is not an empirical astrometric registration. The optional yellow outlines shift the center by ±0.10″ along E/N, using the paper’s quoted relative-offset uncertainty as a sensitivity check, not a confidence region or propagated fit uncertainty. Scores use the adopted center. No angle uncertainties are propagated. No training, fitting, or research files are changed.
+
+The main export automatically adds this reference. To refresh only the literature overlay without rerunning inference:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 /path/to/IonizationCone-Automation/venv/bin/python scripts/prepare_cone_literature.py --repo /path/to/IonizationCone-Automation
+```
+
+The downloadable standard-library `reproduce.py` checks both stored IoUs, independently reconstructs the literature mask from its projected polygons, and recomputes the projected opening. Full FITS/WCS regeneration uses the local export script and research environment.
+
+Run `scripts/test_cone_literature.py -v` in that environment to check the footprint against an independent analytic line-of-sight/cone intersection calculation, celestial registration/compass, and the projected hollow-shell interpretation.
 
 ## Voyager example
 
