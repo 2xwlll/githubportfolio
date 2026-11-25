@@ -1,0 +1,12 @@
+[
+  {
+    "date": "2026-11-23",
+    "topic": "Radio astronomy",
+    "title": "What fits inside a 2.86 kHz channel?",
+    "summary": "I compared two views of the same Voyager 1 scan. The carrier drifts across fine channels about 2.79 Hz wide, while the mid-resolution view shows the occupied 2.86 kHz channel without resolving that drift. The interactive waterfall lets you inspect both views.",
+    "link": {
+      "label": "Explore the Voyager data",
+      "url": "/observatory/voyager"
+    }
+  }
+]

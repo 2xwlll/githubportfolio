@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import About from "@/components/home/About";
 import Philosophy from "@/components/home/Philosophy";
 import ResearchShowcase from "@/components/home/ResearchShowcase";
+import ResearchNotebook from "@/components/home/ResearchNotebook";
 import Projects from "@/components/home/Projects";
 import Outreach from "@/components/home/Outreach";
 import CV from "@/components/home/CV";
@@ -15,6 +16,7 @@ export default function Home() {
       <Hero />
       <About />
       <ResearchShowcase />
+      <ResearchNotebook />
       <Projects />
       <Philosophy />
       <CV />
