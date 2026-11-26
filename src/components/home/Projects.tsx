@@ -41,6 +41,9 @@ export default function Projects() {
           <div className="mb-12 grid gap-8 lg:grid-cols-[1fr_.65fr] lg:items-end">
             <div className="relative">
               <Image src="/images/gifs/git_sticker.gif" alt="" width={64} height={64} unoptimized className="mb-5 h-14 w-14 object-contain opacity-80" />
+              <div className="absolute right-0 top-0">
+                <ObservatoryInvitation />
+              </div>
               <p className="mb-4 text-xs font-bold uppercase tracking-[.24em] text-cyan-300">Selected software · November 2026</p>
               <h2 className="max-w-2xl text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Code connected to real questions.</h2>
             </div>
@@ -63,7 +66,6 @@ export default function Projects() {
               </a>
             ))}
           </div>
-          <div className="mt-12 flex justify-end"><ObservatoryInvitation /></div>
         </div>
       </section>
     </>
