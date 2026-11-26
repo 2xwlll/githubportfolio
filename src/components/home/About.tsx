@@ -1,12 +1,23 @@
 import Link from "next/link";
-
-const milestones = [
-  ["2024", "Joined UTSA research", "Began modeling AGN dust structures and learning infrared image analysis."],
-  ["2025", "Moved from images to models", "Built synthetic observations and a U-Net pipeline for consistent cone measurements."],
-  ["2026", "Tested and expanded", "Presented the framework, tested real observations, and added radio astronomy through Breakthrough Listen."],
-  ["Now", "Research and outreach", "Testing transfer to JWST observations and sharing the path into research with students and the UTSA community."],
-];
+import ResearchTimeline from "./ResearchTimeline";
 
 export default function About() {
-  return <section id="about" className="relative border-y border-white/10 bg-slate-900 py-24 sm:py-32"><div className="mx-auto grid max-w-7xl gap-14 px-5 sm:px-8 lg:grid-cols-[.8fr_1.2fr]"><div><p className="mb-4 text-xs font-bold uppercase tracking-[.24em] text-cyan-300">About me</p><h2 className="text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl">One question led naturally to the next.</h2><div className="mt-7 space-y-5 leading-7 text-slate-300"><p>I am a physics student at the University of Texas at San Antonio, with minors in mathematics and astrophysics, conducting research with the UTSA Mid-Infrared Astrophysics &amp; Exoplanet Science (MAE) Research Group.</p><p>Across imaging, machine learning, and radio analysis, I look for physical questions that can become transparent and reproducible computational systems.</p></div><Link href="/about" className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-cyan-200 transition hover:gap-3">More about my path <span aria-hidden="true">→</span></Link></div><ol className="border-t border-white/10">{milestones.map(([date, title, text]) => <li key={date} className="grid gap-3 border-b border-white/10 py-6 sm:grid-cols-[6rem_1fr]"><p className="text-xs font-bold uppercase tracking-[.17em] text-cyan-300">{date}</p><div><h3 className="text-lg font-extrabold text-white">{title}</h3><p className="mt-2 text-sm leading-6 text-slate-400">{text}</p></div></li>)}</ol></div></section>;
+  return (
+    <section id="about" className="border-y border-white/10 bg-slate-900 py-12 sm:py-16">
+      <div className="mx-auto grid max-w-7xl items-center gap-8 px-5 sm:px-8 lg:grid-cols-[.8fr_minmax(0,1.2fr)] lg:gap-14">
+        <div>
+          <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">About me</h2>
+          <p className="mt-4 max-w-lg leading-7 text-slate-300">
+            I study physics at UT San Antonio, with minors in mathematics and astrophysics.
+            I work on active galactic nuclei with UTSA’s MAE Research Group and on radio
+            technosignature searches with Breakthrough Listen.
+          </p>
+          <Link href="/about" className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-cyan-200 underline decoration-cyan-200/40 underline-offset-4 hover:text-white">
+            Read more about me
+          </Link>
+        </div>
+        <ResearchTimeline />
+      </div>
+    </section>
+  );
 }

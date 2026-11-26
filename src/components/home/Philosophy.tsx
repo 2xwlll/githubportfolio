@@ -32,23 +32,14 @@ export default function Philosophy() {
   return (
     <section
       id="philosophy"
-      className="relative isolate overflow-hidden border-y border-white/10 bg-slate-950 px-5 py-24 sm:px-8 sm:py-32"
+      className="relative isolate overflow-hidden border-y border-white/10 bg-slate-950 scroll-mt-20 px-5 py-12 sm:px-8 sm:py-16"
     >
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_88%_18%,rgba(34,211,238,.13),transparent_28%)]" />
       <div className="mx-auto max-w-7xl">
-        <div className="mb-16 max-w-4xl">
-        <p className="text-sm uppercase tracking-[0.35em] text-cyan-400">
-          Philosophy
-        </p>
+        <h2 className="mb-2 text-xl font-bold text-white">Philosophy</h2>
+        <p className="mb-6 text-sm text-slate-300">How I approach my work</p>
 
-        <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-          How I approach my work
-        </h2>
-
-        <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">Sprinting, curiosity, and coaching shape how I work.</p>
-        </div>
-
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-3">
         {pillars.map((pillar) => (
           <div
             key={pillar.title}

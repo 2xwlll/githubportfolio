@@ -7,7 +7,7 @@ export default function ResearchShowcase({ showNotebookLink = false }: { showNot
     <section id="research" className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-          <div><p className="mb-4 text-xs font-bold uppercase tracking-[.24em] text-cyan-300">Research</p><h2 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Questions, tested in different ways.</h2></div>
+          <div><h2 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Research topics</h2></div>
           <div className="flex shrink-0 flex-wrap items-center gap-x-5">
             {showNotebookLink && (
               <Link href="/research#research-notebook" prefetch={false} className="inline-flex min-h-11 items-center text-sm font-semibold text-slate-300 underline decoration-white/30 underline-offset-4 transition hover:text-white">

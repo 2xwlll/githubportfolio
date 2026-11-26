@@ -44,8 +44,8 @@ export default function Projects() {
               <div className="absolute right-0 top-0">
                 <ObservatoryInvitation />
               </div>
-              <p className="mb-4 text-xs font-bold uppercase tracking-[.24em] text-cyan-300">Selected software · November 2026</p>
-              <h2 className="max-w-2xl text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Code connected to real questions.</h2>
+
+              <h2 className="max-w-2xl text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Research software</h2>
             </div>
             <div>
               <p className="leading-7 text-slate-300">From AGN morphology to radio signals and student engagement, I build reusable tools for analyzing data. My MidRes tutorial and narrowband-search notebooks are also collected in <Link href="/publications" className="font-bold text-cyan-200 hover:text-white">research outputs</Link>.</p>

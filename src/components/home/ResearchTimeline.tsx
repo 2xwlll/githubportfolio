@@ -1,11 +1,35 @@
 const milestones = [
-  { date: "2024", title: "Joined UTSA research", text: "Began modeling AGN dust structures and learning infrared image analysis with the MAE Research Group." },
-  { date: "2025", title: "Moved from images to models", text: "Started building synthetic observations and a U-Net pipeline to identify ionization cones consistently." },
-  { date: "Spring 2026", title: "Tested the framework", text: "Presented the ionization-cone work at UTSA, the UTSA–SwRI Symposium, and the Kyoto Torus Workshop." },
-  { date: "Summer 2026", title: "Added radio astronomy", text: "Joined the Breakthrough Listen REU at Berkeley to compare technosignature searches across data resolutions." },
-  { date: "Now", title: "Research and outreach", text: "Testing transfer to JWST observations and sharing my research path through invited speaking and high-school STEM outreach." },
+  { date: "Sept. 2024", title: "Started at UTSA", detail: "Began my physics degree and joined the MAE Research Group." },
+  { date: "Oct. 2024", title: "APPEX research poster", detail: "Presented a water quality assessment of Lake Boerne." },
+  { date: "May 2025", title: "JWST and active galaxies", detail: "Co-authored a Cosmic Horizons poster on using AI to study AGN." },
+  { date: "May 2026", title: "Kyoto Torus Workshop", detail: "Presented my machine learning framework for tracing ionization cones." },
+  { date: "Summer 2026", title: "Breakthrough Listen REU", detail: "Tested radio signal recovery with Voyager data and synthetic injections." },
+  { date: "Sept. 2026", title: "UTSA Advancement Council", detail: "Spoke about the programs that helped me get started in research." },
 ];
 
 export default function ResearchTimeline() {
-  return <section className="relative overflow-hidden border-y border-white/10 bg-slate-900/65 py-24 sm:py-28"><div className="mx-auto max-w-7xl px-5 sm:px-8"><p className="text-xs font-bold uppercase tracking-[.24em] text-cyan-300">Research timeline</p><h2 className="mt-4 max-w-3xl text-4xl font-extrabold tracking-tight text-white sm:text-5xl">How the questions developed.</h2><div className="relative mt-14 grid gap-5 lg:grid-cols-5"><div className="absolute left-0 right-0 top-5 hidden h-px bg-gradient-to-r from-cyan-300/10 via-cyan-300/70 to-cyan-300/10 lg:block" />{milestones.map((item, index) => <article key={item.date} className="motion-card relative rounded-2xl border border-white/10 bg-slate-950/85 p-6"><span className="relative z-10 mb-5 block h-3 w-3 rounded-full bg-cyan-300 shadow-[0_0_1rem_rgba(34,211,238,.8)] lg:-mt-[1.8rem]" /><p className="text-xs font-bold uppercase tracking-[.17em] text-cyan-300">{item.date}</p><h3 className="mt-3 text-lg font-extrabold text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-slate-400">{item.text}</p><span className="sr-only">Milestone {index + 1} of {milestones.length}</span></article>)}</div></div></section>;
+  return (
+    <div className="min-w-0">
+      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+        <h3 id="research-timeline-title" className="text-sm font-bold text-slate-100">Academic timeline</h3>
+        <p className="text-xs text-slate-400">Scroll sideways to browse</p>
+      </div>
+      <div
+        role="region"
+        aria-labelledby="research-timeline-title"
+        tabIndex={0}
+        className="snap-x overflow-x-auto overscroll-x-contain rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
+      >
+        <ol className="flex w-max gap-3 pb-3">
+          {milestones.map(({ date, title, detail }) => (
+            <li key={date} className="w-48 shrink-0 snap-start rounded-xl border border-white/10 bg-slate-950/60 px-4 py-3">
+              <p className="text-xs font-semibold text-cyan-200">{date}</p>
+              <h4 className="mt-1 text-sm font-bold text-white">{title}</h4>
+              <p className="mt-1 text-sm leading-5 text-slate-400">{detail}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  );
 }
