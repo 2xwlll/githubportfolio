@@ -3,7 +3,7 @@ import { outreach } from "@/lib/cv";
 
 export default function Outreach() {
   return (
-    <section id="outreach" aria-labelledby="outreach-title" className="relative border-y border-white/10 bg-slate-900 scroll-mt-20 py-12 sm:py-16">
+    <section id="outreach" aria-labelledby="outreach-title" className="relative border-y border-white/10 bg-slate-900 scroll-mt-20 py-14 sm:py-20">
       <div className="mx-auto grid max-w-7xl gap-6 px-5 sm:px-8 lg:gap-14 lg:grid-cols-[.8fr_1.2fr]">
         <div>
           <h2 id="outreach-title" className="text-xl font-bold text-white">Outreach &amp; mentoring</h2>

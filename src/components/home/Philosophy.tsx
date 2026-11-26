@@ -32,7 +32,7 @@ export default function Philosophy() {
   return (
     <section
       id="philosophy"
-      className="relative isolate overflow-hidden border-y border-white/10 bg-slate-950 scroll-mt-20 px-5 py-12 sm:px-8 sm:py-16"
+      className="relative isolate overflow-hidden border-y border-white/10 bg-slate-950 scroll-mt-20 px-5 py-14 sm:px-8 sm:py-20"
     >
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_88%_18%,rgba(34,211,238,.13),transparent_28%)]" />
       <div className="mx-auto max-w-7xl">

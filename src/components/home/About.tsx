@@ -3,7 +3,7 @@ import ResearchTimeline from "./ResearchTimeline";
 
 export default function About() {
   return (
-    <section id="about" className="border-y border-white/10 bg-slate-900 py-12 sm:py-16">
+    <section id="about" className="border-y border-white/10 bg-slate-900 py-14 sm:py-20">
       <div className="mx-auto grid max-w-7xl items-center gap-8 px-5 sm:px-8 lg:grid-cols-[.8fr_minmax(0,1.2fr)] lg:gap-14">
         <div>
           <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">About me</h2>
